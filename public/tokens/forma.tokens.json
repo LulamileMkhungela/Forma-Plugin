@@ -1,0 +1,1160 @@
+{
+  "$description": "Forma design tokens. Created by Lulamile Mkhungela. DTCG 2025 colour/dimension values with explicit light and dark theme groups.",
+  "$extensions": {
+    "com.forma": {
+      "name": "Forma",
+      "creator": "Lulamile Mkhungela",
+      "version": "1.0.0"
+    }
+  },
+  "color": {
+    "forest": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.941176, 0.968627, 0.952941],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.862745, 0.92549, 0.882353],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.737255, 0.85098, 0.776471],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.54902, 0.737255, 0.623529],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.376471, 0.611765, 0.47451],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.262745, 0.513725, 0.368627],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.196078, 0.423529, 0.298039],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.152941, 0.337255, 0.239216],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.133333, 0.27451, 0.2],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.113725, 0.227451, 0.168627],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.058824, 0.129412, 0.094118],
+          "alpha": 1
+        }
+      }
+    },
+    "neutral": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.980392, 0.984314, 0.976471],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.952941, 0.960784, 0.945098],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.905882, 0.921569, 0.890196],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.843137, 0.870588, 0.823529],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.690196, 0.729412, 0.658824],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.486275, 0.533333, 0.458824],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.360784, 0.407843, 0.337255],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.254902, 0.301961, 0.239216],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.168627, 0.203922, 0.156863],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.113725, 0.14902, 0.101961],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.07451, 0.105882, 0.066667],
+          "alpha": 1
+        }
+      }
+    },
+    "lime": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.980392, 0.996078, 0.917647],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.941176, 0.980392, 0.8],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.882353, 0.952941, 0.623529],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.815686, 0.921569, 0.466667],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.745098, 0.894118, 0.356863],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.643137, 0.811765, 0.223529],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.490196, 0.643137, 0.129412],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.368627, 0.490196, 0.113725],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.294118, 0.392157, 0.109804],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.254902, 0.333333, 0.113725],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.12549, 0.176471, 0.039216],
+          "alpha": 1
+        }
+      }
+    },
+    "blue": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.941176, 0.964706, 1.0],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.870588, 0.917647, 1.0],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.745098, 0.843137, 0.996078],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.568627, 0.733333, 0.988235],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.356863, 0.588235, 0.964706],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.203922, 0.470588, 0.917647],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.133333, 0.376471, 0.819608],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.12549, 0.301961, 0.666667],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.121569, 0.258824, 0.537255],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.12549, 0.223529, 0.427451],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.078431, 0.141176, 0.262745],
+          "alpha": 1
+        }
+      }
+    },
+    "amber": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1.0, 0.980392, 0.921569],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.941176, 0.780392],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.87451, 0.537255],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.784314, 0.294118],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.992157, 0.690196, 0.133333],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.968627, 0.564706, 0.035294],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.862745, 0.407843, 0.011765],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.709804, 0.278431, 0.031373],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.576471, 0.215686, 0.05098],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.478431, 0.180392, 0.054902],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.27451, 0.105882, 0.031373],
+          "alpha": 1
+        }
+      }
+    },
+    "red": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.952941, 0.94902],
+          "alpha": 1
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.894118, 0.886275],
+          "alpha": 1
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.996078, 0.803922, 0.792157],
+          "alpha": 1
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.992157, 0.635294, 0.607843],
+          "alpha": 1
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.976471, 0.439216, 0.4],
+          "alpha": 1
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.941176, 0.266667, 0.219608],
+          "alpha": 1
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.85098, 0.176471, 0.12549],
+          "alpha": 1
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.705882, 0.137255, 0.094118],
+          "alpha": 1
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.568627, 0.12549, 0.094118],
+          "alpha": 1
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.478431, 0.152941, 0.101961],
+          "alpha": 1
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.333333, 0.086275, 0.047059],
+          "alpha": 1
+        }
+      }
+    }
+  },
+  "space": {
+    "0": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "1": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "3": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "5": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "6": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "10": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 96,
+        "unit": "px"
+      }
+    }
+  },
+  "radius": {
+    "none": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    }
+  },
+  "border": {
+    "width": {
+      "default": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        }
+      },
+      "focus": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3,
+          "unit": "px"
+        }
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": ["DM Sans Variable", "Inter", "sans-serif"]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": ["DM Mono", "monospace"]
+      }
+    },
+    "weight": {
+      "regular": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": 600
+      },
+      "bold": {
+        "$type": "fontWeight",
+        "$value": 700
+      }
+    },
+    "size": {
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      },
+      "base": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      },
+      "4xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        }
+      },
+      "display": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
+      }
+    },
+    "lineHeight": {
+      "tight": {
+        "$type": "number",
+        "$value": 1.15
+      },
+      "normal": {
+        "$type": "number",
+        "$value": 1.5
+      },
+      "relaxed": {
+        "$type": "number",
+        "$value": 1.7
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "fast": {
+        "$type": "duration",
+        "$value": {
+          "value": 100,
+          "unit": "ms"
+        }
+      },
+      "normal": {
+        "$type": "duration",
+        "$value": {
+          "value": 180,
+          "unit": "ms"
+        }
+      },
+      "slow": {
+        "$type": "duration",
+        "$value": {
+          "value": 280,
+          "unit": "ms"
+        }
+      }
+    },
+    "ease": {
+      "standard": {
+        "$type": "cubicBezier",
+        "$value": [0.2, 0, 0, 1]
+      }
+    }
+  },
+  "breakpoint": {
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 640,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 768,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1024,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1280,
+        "unit": "px"
+      }
+    }
+  },
+  "theme": {
+    "light": {
+      "background": {
+        "canvas": {
+          "$type": "color",
+          "$value": "{color.neutral.100}"
+        },
+        "surface": {
+          "$type": "color",
+          "$value": "{color.neutral.50}"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.neutral.200}"
+        },
+        "inverted": {
+          "$type": "color",
+          "$value": "{color.neutral.900}"
+        }
+      },
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.neutral.900}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{color.neutral.600}"
+        },
+        "muted": {
+          "$type": "color",
+          "$value": "{color.neutral.600}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{color.neutral.50}"
+        }
+      },
+      "action": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.forest.700}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.forest.800}"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.forest.50}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.forest.700}"
+        },
+        "onPrimary": {
+          "$type": "color",
+          "$value": "{color.neutral.50}"
+        }
+      },
+      "border": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.neutral.300}"
+        },
+        "strong": {
+          "$type": "color",
+          "$value": "{color.neutral.500}"
+        }
+      },
+      "focus": {
+        "ring": {
+          "$type": "color",
+          "$value": "{color.blue.600}"
+        }
+      },
+      "status": {
+        "success": {
+          "$type": "color",
+          "$value": "{color.forest.700}"
+        },
+        "successSubtle": {
+          "$type": "color",
+          "$value": "{color.forest.50}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{color.red.700}"
+        },
+        "dangerSubtle": {
+          "$type": "color",
+          "$value": "{color.red.50}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{color.amber.800}"
+        },
+        "warningSubtle": {
+          "$type": "color",
+          "$value": "{color.amber.50}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{color.blue.700}"
+        },
+        "infoSubtle": {
+          "$type": "color",
+          "$value": "{color.blue.50}"
+        }
+      }
+    },
+    "dark": {
+      "background": {
+        "canvas": {
+          "$type": "color",
+          "$value": "{color.neutral.950}"
+        },
+        "surface": {
+          "$type": "color",
+          "$value": "{color.neutral.900}"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.neutral.800}"
+        },
+        "inverted": {
+          "$type": "color",
+          "$value": "{color.neutral.50}"
+        }
+      },
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.neutral.50}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{color.neutral.300}"
+        },
+        "muted": {
+          "$type": "color",
+          "$value": "{color.neutral.400}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{color.neutral.900}"
+        }
+      },
+      "action": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.forest.200}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.forest.100}"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.forest.950}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.forest.200}"
+        },
+        "onPrimary": {
+          "$type": "color",
+          "$value": "{color.forest.950}"
+        }
+      },
+      "border": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.neutral.700}"
+        },
+        "strong": {
+          "$type": "color",
+          "$value": "{color.neutral.500}"
+        }
+      },
+      "focus": {
+        "ring": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
+        }
+      },
+      "status": {
+        "success": {
+          "$type": "color",
+          "$value": "{color.forest.200}"
+        },
+        "successSubtle": {
+          "$type": "color",
+          "$value": "{color.forest.950}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{color.red.300}"
+        },
+        "dangerSubtle": {
+          "$type": "color",
+          "$value": "{color.red.950}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{color.amber.200}"
+        },
+        "warningSubtle": {
+          "$type": "color",
+          "$value": "{color.amber.950}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
+        },
+        "infoSubtle": {
+          "$type": "color",
+          "$value": "{color.blue.950}"
+        }
+      }
+    }
+  },
+  "component": {
+    "button": {
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.md}"
+      },
+      "height": {
+        "sm": {
+          "$type": "dimension",
+          "$value": {
+            "value": 32,
+            "unit": "px"
+          }
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": {
+            "value": 40,
+            "unit": "px"
+          }
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": {
+            "value": 48,
+            "unit": "px"
+          }
+        }
+      }
+    },
+    "field": {
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.md}"
+      },
+      "height": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      }
+    },
+    "card": {
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}"
+      },
+      "padding": {
+        "$type": "dimension",
+        "$value": "{space.6}"
+      }
+    }
+  }
+}

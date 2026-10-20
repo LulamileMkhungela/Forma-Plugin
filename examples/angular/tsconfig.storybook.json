@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "types": [] },
+  "include": [".storybook/**/*.ts", "src/**/*.stories.ts", "src/forma-*.component.ts"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@forma/angular-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Runnable Angular adapter and Storybook for Forma Design System by Lulamile Mkhungela.",
+  "scripts": {
+    "start": "ng serve --host 0.0.0.0",
+    "build": "ng build --configuration production",
+    "storybook": "ng run forma-angular:storybook",
+    "build-storybook": "ng run forma-angular:build-storybook"
+  },
+  "dependencies": {
+    "@angular/animations": "^22.2.2",
+    "@angular/common": "^22.2.2",
+    "@angular/compiler": "^22.2.2",
+    "@angular/core": "^22.2.2",
+    "@angular/platform-browser": "^22.2.2",
+    "@angular/platform-browser-dynamic": "^22.2.2",
+    "rxjs": "^7.8.2",
+    "zone.js": "^0.16.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^22.2.2",
+    "@angular/cli": "^22.2.2",
+    "@angular/compiler-cli": "^22.2.2",
+    "@storybook/addon-a11y": "^10.6.1",
+    "@storybook/addon-docs": "^10.6.1",
+    "@storybook/angular": "^10.6.1",
+    "storybook": "^10.6.1",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "forma-angular": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "forma",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/forma-angular",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "styles": ["src/styles.css"],
+            "assets": [{ "glob": "forma-icon-128.png", "input": "src/assets", "output": "/" }]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                { "type": "initial", "maximumWarning": "650kb", "maximumError": "1.2mb" },
+                { "type": "anyComponentStyle", "maximumWarning": "8kb", "maximumError": "12kb" }
+              ],
+              "outputHashing": "all"
+            },
+            "development": { "optimization": false, "extractLicenses": false, "sourceMap": true }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": { "host": "0.0.0.0", "allowedHosts": [".e2b.app"] },
+          "configurations": {
+            "production": { "buildTarget": "forma-angular:build:production" },
+            "development": { "buildTarget": "forma-angular:build:development" }
+          },
+          "defaultConfiguration": "development"
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "forma-angular:build:production",
+            "tsConfig": "tsconfig.storybook.json",
+            "host": "0.0.0.0",
+            "port": 6007,
+            "compodoc": false,
+            "open": false
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "forma-angular:build:production",
+            "tsConfig": "tsconfig.storybook.json",
+            "compodoc": false,
+            "outputDir": "storybook-static"
+          }
+        }
+      }
+    }
+  }
+}

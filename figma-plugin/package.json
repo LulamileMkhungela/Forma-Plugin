@@ -1,0 +1,29 @@
+{
+  "name": "forma-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generate native Figma design-system assets from shared tokens and export changes for React and Angular handoff.",
+  "main": "code.js",
+  "type": "module",
+  "author": "Lulamile Mkhungela",
+  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "watch": "node scripts/build.mjs --watch"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@figma/eslint-plugin-figma-plugins": "1.0.0",
+    "@figma/plugin-typings": "1.141.0",
+    "eslint": "10.12.0",
+    "esbuild": "0.25.12",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.57.1"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

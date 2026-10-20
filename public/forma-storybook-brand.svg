@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="80" viewBox="0 0 360 80" fill="none">
+  <rect x="2" y="8" width="64" height="64" rx="17" fill="#24563C"/>
+  <path d="M18 24h13v13H18zm19 0h13v13H37zM18 43h13v13H18z" fill="#F3F5F1"/>
+  <path d="M37 43h13v13H37z" fill="#A8D94C"/>
+  <text x="82" y="45" fill="#193D2B" font-family="DM Sans, Inter, Arial, sans-serif" font-size="37" font-weight="700" letter-spacing="-2">forma<tspan fill="#8FBF3E">.</tspan></text>
+  <text x="84" y="64" fill="#607368" font-family="DM Sans, Inter, Arial, sans-serif" font-size="9" font-weight="600" letter-spacing="1.35">A LIVING DESIGN SYSTEM · LULAMILE MKHUNGELA</text>
+</svg>

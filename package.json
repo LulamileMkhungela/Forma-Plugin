@@ -1,0 +1,42 @@
+{
+  "name": "forma-design-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Forma Design System — tokens, components and Figma-to-code tooling by Lulamile Mkhungela.",
+  "author": "Lulamile Mkhungela",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run tokens && vite --host 0.0.0.0",
+    "workbench": "npm run tokens && node scripts/start-workbench.mjs",
+    "dev:guide": "vite --host 0.0.0.0",
+    "storybook:server": "storybook dev --host 0.0.0.0 -p 6006",
+    "build": "npm run tokens && npm run typecheck && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.figma.json",
+    "tokens": "node scripts/build-tokens.mjs",
+    "storybook": "npm run tokens && storybook dev --host 0.0.0.0 -p 6006",
+    "build-storybook": "npm run tokens && storybook build",
+    "build:figma": "node scripts/build-figma.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "lucide-react": "^1.55.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "style-dictionary": "^5.6.1"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.120.0",
+    "@storybook/addon-a11y": "^10.6.1",
+    "@storybook/addon-docs": "^10.6.1",
+    "@storybook/react-vite": "^10.6.1",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "esbuild": "^0.28.0",
+    "storybook": "^10.6.1",
+    "typescript": "^5.9.0",
+    "vite": "^8.3.4"
+  }
+}

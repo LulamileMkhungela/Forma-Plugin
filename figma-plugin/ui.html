@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        font:
+          12px/1.7 Inter,
+          system-ui,
+          sans-serif;
+        color: #1d261a;
+        background: #fafbf9;
+      }
+      header {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #d7ded2;
+      }
+      .mark {
+        background: #27563d;
+        color: #e1f39f;
+        display: grid;
+        place-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        font-size: 28px;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: 650;
+        letter-spacing: -1px;
+        margin: 0;
+        line-height: 1.2;
+      }
+      header small {
+        font-size: 9px;
+        color: #5c6856;
+      }
+      h2 {
+        font-size: 19px;
+        line-height: 1.35;
+        font-weight: 550;
+        letter-spacing: -0.5px;
+        margin: 23px 0 9px;
+      }
+      p {
+        font-size: 11px;
+        color: #5c6856;
+        margin: 0 0 17px;
+      }
+      button {
+        border: 1px solid #d7ded2;
+        border-radius: 7px;
+        background: #fafbf9;
+        color: #1d261a;
+        padding: 10px 14px;
+        font:
+          500 11px/1.5 Inter,
+          system-ui,
+          sans-serif;
+        cursor: pointer;
+        min-height: 37px;
+        width: 100%;
+      }
+      button:hover {
+        background: #f3f5f1;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid #2260d1;
+        outline-offset: 2px;
+      }
+      button.primary {
+        background: #27563d;
+        border-color: #27563d;
+        color: #fafbf9;
+        margin-top: 15px;
+      }
+      button.primary:hover {
+        background: #224633;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+      }
+      .row > button {
+        width: 50%;
+      }
+      .token-count {
+        font-size: 10px;
+        color: #27563d;
+        background: #f0f7f3;
+        border: 1px solid #dcece1;
+        border-radius: 6px;
+        padding: 9px 12px;
+        margin: 17px 0;
+      }
+      label {
+        display: block;
+        font-size: 10px;
+        color: #414d3d;
+        font-weight: 500;
+        margin: 17px 0 6px;
+      }
+      input[type='url'],
+      select {
+        border: 1px solid #d7ded2;
+        border-radius: 6px;
+        width: 100%;
+        padding: 9px 11px;
+        font:
+          11px Inter,
+          system-ui;
+        background: #f3f5f1;
+        color: #1d261a;
+      }
+      .hint {
+        font-size: 9px;
+        line-height: 1.7;
+        color: #5c6856;
+        margin: 7px 0 0;
+      }
+      #status {
+        border-top: 1px solid #d7ded2;
+        margin-top: 20px;
+        padding-top: 14px;
+        font-size: 10px;
+        color: #5c6856;
+        white-space: pre-wrap;
+        min-height: 58px;
+      }
+      footer {
+        font-size: 9px;
+        color: #5c6856;
+        border-top: 1px solid #d7ded2;
+        margin-top: 15px;
+        padding-top: 14px;
+      }
+      footer strong {
+        font-weight: 500;
+        color: #1d261a;
+      }
+      .file {
+        display: none;
+      }
+      .success {
+        color: #27563d !important;
+      }
+      .error {
+        color: #b42318 !important;
+      }
+      #download {
+        display: none;
+      }
+      .notice {
+        font-size: 9px;
+        padding: 10px 12px;
+        border: 1px solid #fedf89;
+        background: #fffaeb;
+        border-radius: 6px;
+        color: #93370d;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="mark">f</span>
+      <div>
+        <h1>forma.</h1>
+        <small>A LIVING DESIGN SYSTEM</small>
+      </div>
+    </header>
+    <h2>One source.<br />A shared language.</h2>
+    <p>
+      Build native variables, text styles, and component sets from the same tokens used by React and
+      Angular.
+    </p>
+    <div id="count" class="token-count">Loading the bundled source…</div>
+    <div class="row">
+      <button id="import">Import token JSON</button><button id="bundled">Use bundled tokens</button>
+    </div>
+    <input class="file" type="file" id="file" accept=".json,application/json" /><label
+      for="storybook"
+      >Storybook base URL (optional)</label
+    ><input id="storybook" type="url" placeholder="Your published React Storybook URL" />
+    <p class="hint">
+      Adds documentation links to component descriptions. No network request or account connection
+      is made.
+    </p>
+    <label for="placement">Where to build</label
+    ><select id="placement">
+      <option value="auto">Auto — four pages, or share the pages this file allows</option>
+      <option value="single">This page — every board in one stack</option>
+      <option value="pages">Four new pages only — refuse if unavailable</option>
+    </select>
+    <p class="hint">
+      Starter files hold three pages. Auto keeps the Forma pages Figma allows (for example 00 and
+      01) and places all four boards on them, so every component stays visible. Nothing is deleted.
+    </p>
+    <button class="primary" id="build">Build design library →</button
+    ><button id="export" style="margin-top: 9px">Export edited Figma variables ↓</button
+    ><a id="download"></a>
+    <div class="notice">
+      Re-runs update Forma variables and create new generated pages. Existing design pages are never
+      deleted. If your plan limits modes, separate Light and Dark collections are used. If it limits
+      pages, all four boards are shared across the Forma pages available, under headings.
+    </div>
+    <div id="status" role="status">
+      Your design file stays local. Nothing is sent to an external service.
+    </div>
+    <footer>
+      Designed & created by <strong>Lulamile Mkhungela</strong><br />Figma → Tokens → React /
+      Angular → Storybook
+    </footer>
+    <script>
+      let tokens = null,
+        bundled = null,
+        busy = false;
+      const byId = (id) => document.getElementById(id);
+      function status(text, tone = '') {
+        byId('status').textContent = text;
+        byId('status').className = tone;
+      }
+      function send(message) {
+        parent.postMessage({ pluginMessage: message }, '*');
+      }
+      function setBusy(value) {
+        busy = value;
+        for (const id of ['build', 'export', 'import', 'bundled']) byId(id).disabled = value;
+      }
+      function count(node) {
+        if (!node || typeof node !== 'object') return 0;
+        if ('$value' in node) return 1;
+        return Object.keys(node)
+          .filter((k) => !k.startsWith('$'))
+          .reduce((n, k) => n + count(node[k]), 0);
+      }
+      function setTokens(value) {
+        tokens = value;
+        byId('count').textContent = count(value) + ' typed tokens · shared with React and Angular';
+      }
+      byId('import').onclick = () => byId('file').click();
+      byId('file').onchange = async (event) => {
+        try {
+          const file = event.target.files[0];
+          if (!file) return;
+          if (file.size > 2097152) throw new Error('Choose a document smaller than 2 MB.');
+          const value = JSON.parse(await file.text());
+          if (!value || typeof value !== 'object' || !count(value))
+            throw new Error('No typed tokens found.');
+          setTokens(value);
+          status('Imported draft. It will be fully validated before building.');
+        } catch (e) {
+          status(e.message, 'error');
+        } finally {
+          event.target.value = '';
+        }
+      };
+      byId('bundled').onclick = () => {
+        if (bundled) {
+          setTokens(bundled);
+          status('Using the bundled canonical source.');
+        }
+      };
+      byId('build').onclick = () => {
+        if (busy || !tokens) return;
+        const url = byId('storybook').value.trim();
+        if (url && !/^https?:\/\//.test(url)) {
+          status('Use a complete HTTP or HTTPS Storybook URL.', 'error');
+          return;
+        }
+        setBusy(true);
+        status('Validating tokens and loading available fonts…');
+        send({ type: 'build', tokens, storybookBase: url, placement: byId('placement').value });
+      };
+      byId('export').onclick = () => {
+        if (busy) return;
+        setBusy(true);
+        status('Reading the current Forma variables…');
+        send({ type: 'export' });
+      };
+      window.onmessage = (event) => {
+        const message = event.data.pluginMessage;
+        if (!message) return;
+        if (message.type === 'source') {
+          bundled = message.bundled;
+          setTokens(message.tokens || bundled);
+        }
+        if (message.type === 'progress') status(message.message);
+        if (message.type === 'success') {
+          setBusy(false);
+          status(message.message, 'success');
+        }
+        if (message.type === 'error') {
+          setBusy(false);
+          status(message.message, 'error');
+        }
+        if (message.type === 'export') {
+          setBusy(false);
+          setTokens(message.tokens);
+          const url = URL.createObjectURL(
+            new Blob([JSON.stringify(message.tokens, null, 2)], { type: 'application/json' }),
+          );
+          const a = byId('download');
+          a.href = url;
+          a.download = 'forma.figma-export.tokens.json';
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
+          status(
+            'Variables exported. Review the JSON in Git, build the tokens, and verify both Storybooks.',
+            'success',
+          );
+        }
+      };
+      send({ type: 'ready' });
+    </script>
+  </body>
+</html>
