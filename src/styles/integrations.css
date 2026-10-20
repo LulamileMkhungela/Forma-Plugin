@@ -508,3 +508,22 @@
 @media (max-width: 480px) {
   .documentation-guide-facts { grid-template-columns: 1fr; }
 }
+
+/* The real plugin panel, embedded — never a stale screenshot. */
+.plugin-preview { margin: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: #fff; box-shadow: var(--shadow-card); }
+.plugin-preview__chrome { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-bottom: 1px solid var(--line); background: var(--surface-subtle); }
+.plugin-preview__lights { display: inline-flex; gap: 4px; }
+.plugin-preview__lights i { width: 7px; height: 7px; border-radius: 50%; background: var(--color-neutral-300); }
+.plugin-preview__lights i:first-child { background: #d76d7d; }
+.plugin-preview__lights i:nth-child(2) { background: #e0b23f; }
+.plugin-preview__lights i:nth-child(3) { background: #4c9a6e; }
+.plugin-preview__chrome b { font-size: 8.5px; font-weight: 700; letter-spacing: .04em; color: var(--text-muted); text-transform: uppercase; }
+.plugin-preview__chrome small { margin-left: auto; font-size: 7.5px; font-weight: 700; color: #1a6b3c; background: #eef5ee; border: 1px solid #d5e6d5; border-radius: 999px; padding: 2px 7px; }
+.plugin-preview iframe { display: block; width: 100%; height: 620px; border: 0; background: #fafbf9; }
+.plugin-preview figcaption { padding: 8px 12px; border-top: 1px solid var(--line); color: var(--text-muted); font-size: 8px; }
+.plugin-preview--hero { border-color: rgba(255, 255, 255, .25); }
+.plugin-preview--hero iframe { height: 560px; }
+.component-library-hero__art--panel { aspect-ratio: auto; background: transparent; border: 0; padding: 0; box-shadow: none; }
+.component-library-hero__art--panel .plugin-preview { height: 100%; }
+.component-library-hero__art--panel iframe { height: 430px; }
+.explorer-figure { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; }

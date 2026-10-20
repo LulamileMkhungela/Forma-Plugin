@@ -1187,14 +1187,14 @@
     const tokens = new Map(flattenTokens(document2).map((t) => [t.path, t]));
     function resolve(name, trail) {
       if (trail.includes(name))
-        throw new Error(`Circular reference: ${[...trail, name].join(" \u2192 ")}`);
+        throw new Error(`Circular reference: ${[...trail, name].join(" → ")}`);
       const t = tokens.get(name);
       if (!t) throw new Error(`Unknown token: ${name}`);
       const ref = aliasPath(t.value);
       if (!ref) return t.value;
       const target = tokens.get(ref);
       if (target && target.type !== t.type)
-        throw new Error(`Type mismatch: ${name} (${t.type}) \u2192 ${ref} (${target.type})`);
+        throw new Error(`Type mismatch: ${name} (${t.type}) → ${ref} (${target.type})`);
       return resolve(ref, [...trail, name]);
     }
     return resolve(path, stack);
@@ -1319,7 +1319,7 @@
         } else if (t.type === "cubicBezier") {
           if (!Array.isArray(v) || v.length !== 4 || v.some((x) => typeof x !== "number" || !Number.isFinite(x)) || v[0] < 0 || v[0] > 1 || v[2] < 0 || v[2] > 1)
             errors.push(
-              `${t.path}: expected four cubic B\xE9zier values, with x values between 0 and 1.`
+              `${t.path}: expected four cubic Bézier values, with x values between 0 and 1.`
             );
         } else if (typeof v !== "number" || !Number.isFinite(v))
           errors.push(`${t.path}: expected a finite number.`);
@@ -1412,16 +1412,16 @@
   // placement.ts
   var FORMA_PAGE_COUNT = 4;
   var FORMA_PAGE_NAMES = [
-    "00 \xB7 Forma \u2014 Start here",
-    "01 \xB7 Foundations",
-    "02 \xB7 Components",
-    "03 \xB7 Patterns"
+    "00 · Forma — Start here",
+    "01 · Foundations",
+    "02 · Components",
+    "03 · Patterns"
   ];
   var FORMA_BOARD_NAMES = [
-    "00 \xB7 Forma \u2014 Start here",
-    "01 \xB7 Foundations",
-    "02 \xB7 Components",
-    "03 \xB7 Patterns"
+    "00 · Forma — Start here",
+    "01 · Foundations",
+    "02 · Components",
+    "03 · Patterns"
   ];
   function isPlacementPreference(value) {
     return value === "auto" || value === "single" || value === "pages";
@@ -1431,7 +1431,7 @@
     if (available >= FORMA_PAGE_COUNT) return "pages";
     if (preference === "pages")
       throw new Error(
-        `Figma allowed ${available} of the ${FORMA_PAGE_COUNT} new pages Forma needs (Starter files are limited to three pages). Nothing was deleted. Choose \u201CAuto\u201D or \u201CThis page\u201D in Where to build, or free up pages and build again.`
+        `Figma allowed ${available} of the ${FORMA_PAGE_COUNT} new pages Forma needs (Starter files are limited to three pages). Nothing was deleted. Choose “Auto” or “This page” in Where to build, or free up pages and build again.`
       );
     return filled >= 1 ? "shared" : "single";
   }
@@ -1519,7 +1519,7 @@
   var exports = {
     button: "Button",
     "text-field": "TextField",
-    select: "Select",
+    select: "SelectField",
     checkbox: "Checkbox",
     "radio-group": "RadioGroup",
     switch: "Switch",
@@ -1534,6 +1534,36 @@
     tooltip: "Tooltip",
     table: "Table"
   };
+  var storySlugs = {
+    button: "forma-actions-button",
+    "text-field": "forma-forms-text-field",
+    select: "forma-forms-text-field",
+    checkbox: "forma-forms-selection-controls",
+    "radio-group": "forma-forms-radio-group",
+    switch: "forma-forms-selection-controls",
+    badge: "forma-feedback",
+    avatar: "forma-feedback",
+    card: "forma-feedback",
+    tabs: "forma-navigation-tabs",
+    accordion: "forma-navigation-accordion",
+    dialog: "forma-overlays-dialog",
+    alert: "forma-feedback",
+    progress: "forma-feedback-progress",
+    tooltip: "forma-overlays-tooltip",
+    table: "forma-data-display-table"
+  };
+  var angularAdapters = /* @__PURE__ */ new Set(["button", "text-field", "select", "checkbox", "switch", "badge", "alert"]);
+  function angularUsage(id) {
+    if (!angularAdapters.has(id)) return "Angular native markup + shared CSS";
+    const file = id === "badge" || id === "alert" ? "forma-feedback.component.ts" : `forma-${id}.component.ts`;
+    return `Angular <forma-${id}> (examples/angular/src/${file})`;
+  }
+  function angularSelector(id) {
+    return angularAdapters.has(id) ? `forma-${id}` : "native";
+  }
+  function codeRef(id) {
+    return `React ${exports[id]} (src/system/components.tsx) · ${angularUsage(id)}`;
+  }
   var document = defaultTokens;
   var bindings = {};
   var variables = /* @__PURE__ */ new Map();
@@ -1549,6 +1579,14 @@
   function dimension(path) {
     const value = resolveToken(document, path);
     return value.value * (value.unit === "rem" ? 16 : 1);
+  }
+  function measure(path) {
+    const resolved = resolveToken(document, path);
+    return typeof resolved === "number" ? { value: resolved, unit: "" } : resolved;
+  }
+  function bind(node, field2, path) {
+    const variable = variables.get(path);
+    if (variable) node.setBoundVariable(field2, variable);
   }
   function rgb(path) {
     const value = resolveToken(document, path);
@@ -1648,7 +1686,7 @@
     if (state === "Loading")
       node.appendChild(
         text(
-          "\u25CC",
+          "◌",
           14,
           variant === "Secondary" || variant === "Ghost" ? "text.primary" : "action.onPrimary",
           mode
@@ -1661,8 +1699,10 @@
       mode
     );
     node.appendChild(content);
+    const heightToken = `component.button.height.${size.toLowerCase()}`;
     node.counterAxisSizingMode = "FIXED";
-    node.resize(node.width, size === "Small" ? 32 : size === "Large" ? 48 : 40);
+    node.resize(node.width, dimension(heightToken));
+    bind(node, "height", heightToken);
     if (state === "Disabled") node.opacity = 0.48;
     return node;
   }
@@ -1672,6 +1712,10 @@
     const box = group("HORIZONTAL", 8, "background.surface", mode);
     pad(box, 11);
     fixedWidth(box, 260);
+    box.counterAxisSizingMode = "FIXED";
+    box.resize(box.width, dimension("component.field.height"));
+    bind(box, "height", "component.field.height");
+    box.counterAxisAlignItems = "CENTER";
     box.primaryAxisAlignItems = "SPACE_BETWEEN";
     radius(box, "component.field.radius");
     border(box, mode);
@@ -1685,7 +1729,7 @@
         mode
       )
     );
-    if (select) box.appendChild(text("\u2304", 16, "text.secondary", mode));
+    if (select) box.appendChild(text("⌄", 16, "text.secondary", mode));
     node.appendChild(box);
     node.appendChild(
       text(
@@ -1725,7 +1769,7 @@
         border(box, mode);
         box.strokes = [paint(themePath("border.strong", mode))];
       }
-      if (selected) box.appendChild(text("\u2713", 12, "action.onPrimary", mode, "medium"));
+      if (selected) box.appendChild(text("✓", 12, "action.onPrimary", mode, "medium"));
       node.appendChild(box);
     }
     node.appendChild(
@@ -1792,14 +1836,23 @@
   }
   function card(footer = true, mode = "light") {
     const node = group("VERTICAL", 14, "background.surface", mode);
-    pad(node, 20);
+    pad(node, dimension("component.card.padding"));
+    for (const field2 of ["paddingTop", "paddingBottom", "paddingLeft", "paddingRight"])
+      bind(node, field2, "component.card.padding");
     fixedWidth(node, 300);
     radius(node, "component.card.radius");
     border(node, mode);
     node.appendChild(text("THE NEXT CHAPTER", 10, "action.text", mode, "medium"));
     node.appendChild(label("A new perspective", 20, "text.primary", mode));
     node.appendChild(
-      text("Build something worth sharing.", 13, "text.secondary", mode, "regular", 260)
+      text(
+        "Build something worth sharing.",
+        13,
+        "text.secondary",
+        mode,
+        "regular",
+        300 - dimension("component.card.padding") * 2
+      )
     );
     const row = group("HORIZONTAL", 10, void 0, mode);
     row.counterAxisAlignItems = "CENTER";
@@ -1883,7 +1936,7 @@
         row.paddingTop = 16;
         row.paddingBottom = 16;
         row.appendChild(label("What are design tokens?", 14, "text.primary", mode));
-        row.appendChild(text(state === "Expanded" ? "\u2303" : "\u2304", 16, "text.secondary", mode));
+        row.appendChild(text(state === "Expanded" ? "⌃" : "⌄", 16, "text.secondary", mode));
         node.appendChild(row);
         if (state === "Expanded")
           node.appendChild(
@@ -1915,7 +1968,7 @@
         radius(node);
         node.strokes = [paint(themePath(`status.${key}`, mode))];
         node.strokeWeight = 1;
-        node.appendChild(text("\u24D8", 20, `status.${key}`, mode));
+        node.appendChild(text("ⓘ", 20, `status.${key}`, mode));
         const content = group("VERTICAL", 3, void 0, mode);
         content.appendChild(label("A useful detail", 13, `status.${key}`, mode));
         content.appendChild(
@@ -2057,7 +2110,7 @@
   }
   async function syncVariables() {
     var _a;
-    progress("Creating and updating native Forma variables\u2026");
+    progress("Creating and updating native Forma variables…");
     const local = await figma.variables.getLocalVariableCollectionsAsync();
     const allVars = await figma.variables.getLocalVariablesAsync();
     const varsById = new Map(allVars.map((v) => [v.id, v]));
@@ -2076,9 +2129,9 @@
       collections.set(kind, c);
       return c;
     };
-    const primitives = collection("primitives", "Forma \xB7 Primitives");
-    const components = collection("components", "Forma \xB7 Components");
-    const semantics = collection("semantics", "Forma \xB7 Semantics");
+    const primitives = collection("primitives", "Forma · Primitives");
+    const components = collection("components", "Forma · Components");
+    const semantics = collection("semantics", "Forma · Semantics");
     semantics.renameMode(semantics.defaultModeId, "Light");
     let darkMode = (_a = semantics.modes.find((m) => m.name === "Dark")) == null ? void 0 : _a.modeId;
     let darkCollection = semantics;
@@ -2086,7 +2139,7 @@
       try {
         darkMode = semantics.addMode("Dark");
       } catch {
-        darkCollection = collection("semantics-dark", "Forma \xB7 Semantics (Dark)");
+        darkCollection = collection("semantics-dark", "Forma · Semantics (Dark)");
         darkCollection.renameMode(darkCollection.defaultModeId, "Dark");
         darkMode = darkCollection.defaultModeId;
         warnings.push(
@@ -2109,7 +2162,7 @@
         throw new Error(
           `${token.path}: variable type changed. Use a new token name rather than changing a published variable's type.`
         );
-      v.description = `Forma ${token.type} \xB7 ${stem} \xB7 Created by ${OWNER}`;
+      v.description = `Forma ${token.type} · ${stem} · by ${OWNER}`;
       v.setPluginData("forma.owner", OWNER);
       v.setPluginData("forma.path", stem);
       variables.set(token.path, v);
@@ -2128,25 +2181,32 @@
     figma.root.setPluginData("forma.document", JSON.stringify(document));
     figma.root.setPluginData("forma.bindings", JSON.stringify(bindings));
   }
+  var typeScale = [
+    ["Display", "font.size.display", "medium", "font.lineHeight.tight"],
+    ["Heading/01", "font.size.4xl", "bold", "font.lineHeight.tight"],
+    ["Heading/02", "font.size.3xl", "medium", "font.lineHeight.tight"],
+    ["Heading/03", "font.size.2xl", "medium", "font.lineHeight.normal"],
+    ["Title", "font.size.xl", "medium", "font.lineHeight.normal"],
+    ["Body", "font.size.base", "regular", "font.lineHeight.normal"],
+    ["Interface", "font.size.sm", "medium", "font.lineHeight.normal"],
+    ["Caption", "font.size.xs", "regular", "font.lineHeight.relaxed"]
+  ];
   async function syncTextStyles() {
     var _a;
+    progress("Creating text styles…");
     const existing = await figma.getLocalTextStylesAsync();
-    for (const [name, size, weight] of [
-      ["Display", 56, "medium"],
-      ["Heading/01", 40, "bold"],
-      ["Heading/02", 32, "medium"],
-      ["Heading/03", 24, "medium"],
-      ["Body", 16, "regular"],
-      ["Interface", 14, "medium"],
-      ["Caption", 12, "regular"]
-    ]) {
+    for (const [name, sizeToken, weight, leadingToken] of typeScale) {
+      const size = dimension(sizeToken);
+      const leading = Math.round(Number(resolveToken(document, leadingToken)) * 100);
       const full = `Forma/${name}`;
       const style = (_a = existing.find((s) => s.name === full)) != null ? _a : figma.createTextStyle();
       style.name = full;
-      style.description = `Created by ${OWNER}. Shared Forma type scale.`;
+      style.description = `${size}px / ${leading}% · by ${OWNER}`;
       style.fontName = weight === "bold" ? bold : weight === "medium" ? medium : font;
       style.fontSize = size;
-      style.lineHeight = { unit: "PERCENT", value: size >= 32 ? 115 : 150 };
+      style.lineHeight = { unit: "PERCENT", value: leading };
+      const variable = variables.get(sizeToken);
+      if (variable) style.setBoundVariable("fontSize", variable);
     }
   }
   function page(name, suffix) {
@@ -2157,7 +2217,7 @@
     return node;
   }
   async function reserveFormaPages(suffix, strict) {
-    progress("Reserving the Forma pages\u2026");
+    progress("Reserving the Forma pages…");
     return reservePages(
       {
         current: () => figma.currentPage,
@@ -2173,7 +2233,7 @@
   function findFormaPages() {
     return FORMA_PAGE_NAMES.map((base) => {
       const matches = figma.root.children.filter(
-        (node) => node.type === "PAGE" && (node.name === base || node.name.startsWith(`${base} \xB7 `))
+        (node) => node.type === "PAGE" && (node.name === base || node.name.startsWith(`${base} · `))
       );
       return matches[matches.length - 1];
     });
@@ -2230,7 +2290,7 @@
     pad(node, 48);
     fixedWidth(node, width);
     parent.appendChild(node);
-    if (credit) node.appendChild(text(`Created by ${OWNER}`, 12, "text.secondary", mode));
+    if (credit) node.appendChild(text(`Forma · by ${OWNER}`, 12, "text.secondary", mode));
     node.x = 0;
     node.y = 0;
     return node;
@@ -2242,7 +2302,7 @@
   }
   async function buildPages(storybookBase, preference) {
     const sequence = Number(figma.root.getPluginData("forma.generation") || "0") + 1;
-    const suffix = sequence > 1 ? ` \xB7 ${sequence}` : "";
+    const suffix = sequence > 1 ? ` · ${sequence}` : "";
     const home = figma.currentPage;
     const origin = freeSpace(home);
     const reservation = preference === "single" ? { pages: [], available: 0 } : await reserveFormaPages(suffix, preference === "pages");
@@ -2274,7 +2334,7 @@
     const components = hostFor[2];
     const patterns = hostFor[3];
     await focus(cover);
-    const coverBoard = board(cover, "Forma \xB7 Cover", 1280, "light", false);
+    const coverBoard = board(cover, "Forma · Cover", 1280, "light", false);
     coverBoard.layoutMode = "NONE";
     coverBoard.resize(1280, 720);
     const eyebrow = text(
@@ -2297,25 +2357,36 @@
       heading.y = y;
     }
     const description = text(
-      "A shared language for thoughtful products.\nFigma \u2192 Tokens \u2192 React / Angular \u2192 Storybook",
+      "One token source. Figma → React / Angular → Storybook.",
       18,
       "text.secondary"
     );
     coverBoard.appendChild(description);
     description.x = 64;
-    description.y = 328;
-    const creator = text(`Designed & created by ${OWNER}`, 16, "action.text", "light", "medium");
+    description.y = 322;
+    const note = text(
+      `I built Forma so design and code could stop translating each other. — ${OWNER}`,
+      14,
+      "text.secondary",
+      "light",
+      "regular",
+      620
+    );
+    coverBoard.appendChild(note);
+    note.x = 64;
+    note.y = 392;
+    const creator = text(`Designed & built by ${OWNER}`, 16, "action.text", "light", "medium");
     coverBoard.appendChild(creator);
     creator.x = 64;
-    creator.y = 570;
+    creator.y = 566;
     const version = text(
-      `Forma v1.0.0 \xB7 ${flattenTokens(document).length} token values \xB7 16 core components`,
+      `v1.0.0 · ${flattenTokens(document).length} tokens · Light + Dark · 16 component sets · 4 boards`,
       12,
       "text.secondary"
     );
     coverBoard.appendChild(version);
     version.x = 64;
-    version.y = 616;
+    version.y = 606;
     for (let i = 0; i < 4; i++) {
       const tile = figma.createRectangle();
       tile.resize(142, 142);
@@ -2332,76 +2403,243 @@
       shape.y = tile.y + 23;
     }
     await focus(foundations);
-    const foundationBoard = board(foundations, "Forma \xB7 Foundations");
+    const foundationBoard = board(foundations, "Forma · Foundations");
     title(
       foundationBoard,
-      "Start with the essentials",
-      "Primitive values create the range. Semantic aliases provide purpose. Change Light / Dark in the variable mode picker."
+      "Every token, drawn once",
+      "Primitives set the range. Semantic roles give them purpose. Switch Light / Dark in the mode picker."
     );
+    const section = (heading, note2) => {
+      foundationBoard.appendChild(text(heading, 26, "text.primary", "light", "medium"));
+      if (note2)
+        foundationBoard.appendChild(text(note2, 13, "text.secondary", "light", "regular", 1100));
+    };
+    const tagged = (path) => path.split(".").slice(1).join(" · ");
+    const from = (prefix) => flattenTokens(document).filter((token) => token.path.startsWith(prefix));
+    section("Colour", "Six families, 66 primitives. Components reach for semantic roles, not these.");
     for (const family of ["forest", "neutral", "lime", "blue", "amber", "red"]) {
-      const section = group("VERTICAL", 12);
-      section.appendChild(
-        text(family[0].toUpperCase() + family.slice(1), 20, "text.primary", "light", "medium")
-      );
       const row = group("HORIZONTAL", 9);
-      for (const token of flattenTokens(document).filter(
-        (t) => t.path.startsWith(`color.${family}.`)
-      )) {
-        const swatch = group("VERTICAL", 8);
+      for (const token of from(`color.${family}.`)) {
+        const swatch = group("VERTICAL", 7);
         const block = figma.createRectangle();
-        block.resize(88, 70);
+        block.resize(88, 64);
         fills(block, token.path);
         radius(block, "radius.sm");
         swatch.appendChild(block);
-        swatch.appendChild(text(token.path.split(".").slice(-1)[0], 12, "text.secondary"));
+        swatch.appendChild(text(`${family} ${token.path.split(".").pop()}`, 11, "text.secondary"));
         row.appendChild(swatch);
       }
-      section.appendChild(row);
-      foundationBoard.appendChild(section);
-    }
-    foundationBoard.appendChild(text("A little character", 32, "text.primary", "light", "medium"));
-    for (const token of flattenTokens(document).filter((t) => t.path.startsWith("font.size.")).reverse()) {
-      const row = group("HORIZONTAL", 25);
-      row.counterAxisAlignItems = "CENTER";
-      row.appendChild(text(`${token.path} / ${dimension(token.path)}px`, 12, "text.secondary"));
-      row.appendChild(text("Good design. A shared language.", dimension(token.path)));
       foundationBoard.appendChild(row);
     }
-    foundationBoard.appendChild(text("Room to breathe", 32, "text.primary", "light", "medium"));
+    section(
+      "Semantic roles",
+      "Light and Dark share the same 24 stems, so switching modes never renames a token."
+    );
+    const stems = from("theme.light.").map((token) => token.path.replace("theme.light.", ""));
+    const modesRow = group("HORIZONTAL", 28);
+    for (const mode of ["light", "dark"]) {
+      const panel = group("VERTICAL", 14, "background.surface", mode);
+      applyMode(panel, mode);
+      pad(panel, 24);
+      radius(panel, "radius.lg");
+      border(panel, mode);
+      panel.appendChild(
+        text(mode === "light" ? "Light" : "Dark", 18, "text.primary", mode, "medium")
+      );
+      for (let start = 0; start < stems.length; start += 6) {
+        const row = group("HORIZONTAL", 10);
+        for (const stem of stems.slice(start, start + 6)) {
+          const cell = group("VERTICAL", 6);
+          const block = figma.createRectangle();
+          block.resize(92, 44);
+          fills(block, `theme.${mode}.${stem}`);
+          radius(block, "radius.sm");
+          cell.appendChild(block);
+          cell.appendChild(text(stem.replace(".", " · "), 10, "text.secondary", mode));
+          row.appendChild(cell);
+        }
+        panel.appendChild(row);
+      }
+      modesRow.appendChild(panel);
+    }
+    foundationBoard.appendChild(modesRow);
+    section("Type", "Nine sizes, four weights, three line heights. Every size binds to its variable.");
+    const typeRows = group("VERTICAL", 10);
+    for (const token of from("font.size.").reverse()) {
+      const size = dimension(token.path);
+      const row = group("HORIZONTAL", 25);
+      row.counterAxisAlignItems = "CENTER";
+      row.appendChild(text(`${tagged(token.path)} · ${size}px`, 12, "text.secondary"));
+      row.appendChild(text("Design with intention.", size));
+      typeRows.appendChild(row);
+    }
+    foundationBoard.appendChild(typeRows);
+    const weightRow = group("HORIZONTAL", 40);
+    for (const [weightToken, sample] of [
+      ["font.weight.regular", "regular"],
+      ["font.weight.medium", "medium"],
+      ["font.weight.semibold", "bold"],
+      ["font.weight.bold", "bold"]
+    ]) {
+      const cell = group("VERTICAL", 6);
+      cell.appendChild(text("Build with confidence", 22, "text.primary", "light", sample));
+      cell.appendChild(
+        text(`${tagged(weightToken)} · ${measure(weightToken).value}`, 11, "text.secondary")
+      );
+      weightRow.appendChild(cell);
+    }
+    foundationBoard.appendChild(weightRow);
+    const typeMeta = group("HORIZONTAL", 40);
+    for (const path of [
+      "font.family.sans",
+      "font.family.mono",
+      "font.lineHeight.tight",
+      "font.lineHeight.normal",
+      "font.lineHeight.relaxed"
+    ]) {
+      const resolved = resolveToken(document, path);
+      const cell = group("VERTICAL", 5);
+      cell.appendChild(text(path.split(".").slice(1).join("."), 11, "text.secondary"));
+      cell.appendChild(
+        text(
+          Array.isArray(resolved) ? resolved.join(", ") : `${Math.round(Number(resolved) * 100)}%`,
+          14,
+          "text.primary",
+          "light",
+          "medium"
+        )
+      );
+      typeMeta.appendChild(cell);
+    }
+    foundationBoard.appendChild(typeMeta);
+    section("Space & shape", "A 4px rhythm, seven radii, two border weights.");
     const spaces = group("HORIZONTAL", 20);
-    for (const token of flattenTokens(document).filter((t) => t.path.startsWith("space."))) {
-      const column = group("VERTICAL", 9);
+    for (const token of from("space.")) {
+      const size = dimension(token.path);
+      const column = group("VERTICAL", 8);
       const shape = figma.createRectangle();
-      shape.resize(Math.max(1, dimension(token.path)), 40);
+      shape.resize(Math.max(1, size), 40);
       fills(shape, "color.forest.200");
       radius(shape, "radius.sm");
       column.appendChild(shape);
-      column.appendChild(text(`${dimension(token.path)}px`, 12, "text.secondary"));
+      column.appendChild(text(`${token.path.split(".").pop()} · ${size}`, 11, "text.secondary"));
       spaces.appendChild(column);
     }
     foundationBoard.appendChild(spaces);
     const radii = group("HORIZONTAL", 25);
-    for (const token of flattenTokens(document).filter((t) => t.path.startsWith("radius."))) {
-      const column = group("VERTICAL", 10);
+    for (const token of from("radius.")) {
+      const column = group("VERTICAL", 8);
       const shape = figma.createRectangle();
       shape.resize(70, 70);
       fills(shape, "color.forest.100");
       radius(shape, token.path);
       column.appendChild(shape);
-      column.appendChild(text(token.path, 12, "text.secondary"));
+      column.appendChild(
+        text(`${token.path.split(".").pop()} · ${dimension(token.path)}`, 11, "text.secondary")
+      );
       radii.appendChild(column);
     }
     foundationBoard.appendChild(radii);
+    const borders = group("HORIZONTAL", 28);
+    for (const token of from("border.width.")) {
+      const column = group("VERTICAL", 8);
+      const shape = figma.createRectangle();
+      shape.resize(120, 64);
+      fills(shape, "theme.light.background.surface");
+      shape.strokes = [paint("theme.light.focus.ring")];
+      shape.strokeWeight = dimension(token.path);
+      bind(shape, "strokeWeight", token.path);
+      radius(shape, "radius.md");
+      column.appendChild(shape);
+      column.appendChild(
+        text(`${tagged(token.path)} · ${dimension(token.path)}px`, 11, "text.secondary")
+      );
+      borders.appendChild(column);
+    }
+    foundationBoard.appendChild(borders);
+    section("Motion", "Three durations, one shared ease. Prototypes approximate; code owns these.");
+    const motionRow = group("HORIZONTAL", 36);
+    for (const token of from("motion.")) {
+      const column = group("VERTICAL", 8);
+      if (token.type === "duration") {
+        const { value, unit } = measure(token.path);
+        const bar = figma.createRectangle();
+        bar.resize(Math.max(16, Math.round(value / 280 * 160)), 12);
+        fills(bar, "theme.light.action.primary");
+        radius(bar, "radius.full");
+        column.appendChild(bar);
+        column.appendChild(
+          text(`${token.path.split(".").pop()} · ${value}${unit}`, 11, "text.secondary")
+        );
+      } else {
+        column.appendChild(text("ease · standard", 11, "text.secondary"));
+        column.appendChild(
+          text(`cubic-bezier(${resolveToken(document, token.path).join(", ")})`, 16, "text.primary", "light", "medium")
+        );
+      }
+      motionRow.appendChild(column);
+    }
+    foundationBoard.appendChild(motionRow);
+    section("Component tokens", "The eight values the 16 sets are built from.");
+    const componentRow = group("HORIZONTAL", 26);
+    for (const token of from("component.")) {
+      const size = dimension(token.path);
+      const column = group("VERTICAL", 8);
+      const shape = figma.createRectangle();
+      if (token.path.includes("height")) {
+        shape.resize(140, size);
+        fills(shape, "theme.light.action.primary");
+        bind(shape, "height", token.path);
+      } else if (token.path.endsWith("padding")) {
+        shape.resize(size, size);
+        fills(shape, "color.lime.300");
+        bind(shape, "width", token.path);
+        bind(shape, "height", token.path);
+      } else {
+        shape.resize(72, 72);
+        fills(shape, "color.forest.100");
+        radius(shape, token.path);
+      }
+      column.appendChild(shape);
+      column.appendChild(text(token.path.replace("component.", "").replace(/\./g, " · "), 11, "text.secondary"));
+      componentRow.appendChild(column);
+    }
+    foundationBoard.appendChild(componentRow);
+    section("Breakpoints", "Four responsive widths, shared with the CSS export.");
+    const breakpointRow = group("HORIZONTAL", 20);
+    for (const token of from("breakpoint.")) {
+      const { value, unit } = measure(token.path);
+      const column = group("VERTICAL", 8);
+      const bar = figma.createRectangle();
+      bar.resize(Math.max(24, Math.round(value / 1280 * 320)), 14);
+      fills(bar, "color.forest.200");
+      radius(bar, "radius.sm");
+      column.appendChild(bar);
+      column.appendChild(
+        text(`${token.path.split(".").pop()} · ${value}${unit}`, 11, "text.secondary")
+      );
+      breakpointRow.appendChild(column);
+    }
+    foundationBoard.appendChild(breakpointRow);
+    foundationBoard.appendChild(
+      text(
+        `${flattenTokens(document).length} tokens · all bound to native variables`,
+        13,
+        "action.text",
+        "light",
+        "medium"
+      )
+    );
     await focus(components);
-    const componentBoard = board(components, "Forma \xB7 Component library", 1390);
+    const componentBoard = board(components, "Forma · Component library", 1390);
     title(
       componentBoard,
       "Made to work together",
-      "Visual variants, auto layout, and native token bindings. Prototype interactions are intentionally left for the designer to wire."
+      "Every variant is auto-layout and token-bound. You wire the prototypes."
     );
     const sets = /* @__PURE__ */ new Map();
     for (const id of ids) {
-      progress(`Building ${names[id]} visual variants\u2026`);
+      progress(`Building ${names[id]} visual variants…`);
       componentBoard.appendChild(text(names[id], 24, "text.primary", "light", "medium"));
       const specs = variants(id);
       const nodes = [];
@@ -2420,7 +2658,7 @@
         components.appendChild(c);
         c.x = 24 + index % cols * cellWidth;
         c.y = 24 + Math.floor(index / cols) * rowHeight;
-        c.description = `Forma ${names[id]} \xB7 Created by ${OWNER}. React ${exports[id]} in packages/react/src/components.tsx. Angular fm-${id} in packages/angular/src/components.ts.`;
+        c.description = `Forma ${names[id]} · by ${OWNER}. ${codeRef(id)}`;
         nodes.push(c);
       });
       const set = figma.combineAsVariants(nodes, components);
@@ -2432,9 +2670,11 @@
       set.resize(cols * cellWidth + 24, Math.ceil(specs.length / cols) * rowHeight + 24);
       set.setPluginData("forma.component", id);
       set.setPluginData("forma.reactExport", exports[id]);
-      set.setPluginData("forma.angularSelector", `fm-${id}`);
-      const url = storybookBase ? `${storybookBase.replace(/\/$/, "")}/?path=/docs/components-${id}--docs` : "";
-      set.description = `Created by ${OWNER}. React: ${exports[id]}. Angular: fm-${id}. ${url || "Storybook: /docs/components-" + id + "--docs"}`;
+      set.setPluginData("forma.angularSelector", angularSelector(id));
+      const storyPath = `/docs/${storySlugs[id]}--docs`;
+      const url = storybookBase ? `${storybookBase.replace(/\/$/, "")}/?path=${storyPath}` : "";
+      const storyRef = url || `Storybook: ${storyPath}`;
+      set.description = `by ${OWNER}. ${codeRef(id)}. ${storyRef}`;
       const labelNodes = nodes.map((c) => c.findOne((n) => n.type === "TEXT" && n.name === "Label")).filter((n) => !!n);
       if (labelNodes.length && !["badge", "tabs", "table", "progress", "radio-group", "dialog", "tooltip"].includes(id)) {
         const key = set.addComponentProperty("Label", "TEXT", labelNodes[0].characters);
@@ -2444,11 +2684,11 @@
       sets.set(id, set);
     }
     await focus(patterns);
-    const patternBoard = board(patterns, "Forma \xB7 Composed patterns", 1280);
+    const patternBoard = board(patterns, "Forma · Composed patterns", 1280);
     title(
       patternBoard,
-      "Compose, don\u2019t recreate",
-      "Instances reference the generated component sets. Compare the Light and Dark native variable modes."
+      "Compose, don’t recreate",
+      "Real instances — not copies. Compare Light & Dark modes side by side."
     );
     const patternRow = group("HORIZONTAL", 40);
     for (const mode of ["light", "dark"]) {
@@ -2458,7 +2698,7 @@
       fixedWidth(panel, 490);
       radius(panel, "radius.xl");
       border(panel, mode);
-      panel.appendChild(text(`Make yourself at home \xB7 ${mode}`, 24, "text.primary", mode, "medium"));
+      panel.appendChild(text(`Make yourself at home · ${mode}`, 24, "text.primary", mode, "medium"));
       panel.appendChild(text("A little structure for your next idea.", 14, "text.secondary", mode));
       for (const id of [
         "avatar",
@@ -2472,7 +2712,7 @@
         panel.appendChild(instance);
         if (mode === "dark") rebindSemanticPaints(instance, "dark");
       }
-      panel.appendChild(text(`Created by ${OWNER}`, 12, "text.secondary", mode));
+      panel.appendChild(text(`Forma · by ${OWNER}`, 12, "text.secondary", mode));
       patternRow.appendChild(panel);
     }
     patternBoard.appendChild(patternRow);
@@ -2570,8 +2810,8 @@
         const placement = isPlacementPreference(message.placement) ? message.placement : "auto";
         const { kind, pageNames } = await buildPages(message.storybookBase || "", placement);
         const count = new Set(Object.values(bindings).map((b) => b.variableId)).size;
-        const summary = `Built ${count} native variables, ${flattenTokens(document).length} mode values, 16 component sets, and ${placementSummary(kind, pageNames)}.
-Created by ${OWNER}.${warnings.length ? "\n\n" + warnings.join("\n") : ""}`;
+        const summary = `Built by ${OWNER} — ${count} variables (${flattenTokens(document).length} values), 16 component sets, ${placementSummary(kind, pageNames)}.
+Your whole library is in this file — nothing was deleted.${warnings.length ? "\n\n" + warnings.join("\n") : ""}`;
         figma.ui.postMessage({ type: "success", message: summary });
         figma.notify("Forma design library created.");
       } else if (message.type === "export") {

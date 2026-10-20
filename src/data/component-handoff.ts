@@ -17,12 +17,12 @@ export interface ComponentHandoff {
 
 /**
  * The source-of-truth map for every native Figma component set. Keep links here
- * aligned with src/figma-plugin/main.ts, tokens/forma.tokens.json,
- * src/system/*.stories.tsx and src/styles/*.css.
+ * aligned with figma-plugin/code.ts (mirrored to src/figma-plugin/main.ts),
+ * tokens/forma.tokens.json, src/system/*.stories.tsx and src/styles/*.css.
  *
- * The downloadable plugin package ships the author's supplied project verbatim from
- * figma-plugin/, so the descriptions it writes onto Figma component sets follow that
- * project's layout rather than the paths mapped here.
+ * The plugin writes this same handoff onto every generated set: its React export in
+ * src/system/components.tsx, its Angular adapter (or native markup plus the shared CSS)
+ * in examples/angular/src/, and its Storybook story id. `npm test` checks all three.
  */
 export const componentHandoff: ComponentHandoff[] = [
   {

@@ -1,24 +1,30 @@
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deflateRawSync } from 'node:zlib';
+import { build } from 'esbuild';
 
 /**
- * Packages `figma-plugin/` — the Forma plugin project by Lulamile Mkhungela, exactly as supplied
- * in the reference repository (github.com/LulamileMkhungela/Forma, commit ef15be62a9c2f8598157ce94d940e57b7281ad85)
- * — into `public/downloads/forma-figma-plugin.zip`.
+ * Builds and packages the Forma Figma plugin by Lulamile Mkhungela.
  *
- * The packaged files are copied verbatim: `code.js` is the author's compiled bundle of `code.ts`,
- * and this script never regenerates or rewrites it. Images are deliberately excluded from the ZIP.
- * Run `npm test` to verify the download still matches the vendored project byte for byte.
+ * One command, root tooling only — no install inside `figma-plugin/`:
+ *   1. type-check the plugin sources with the plugin's own tsconfig;
+ *   2. bundle `code.ts` → `code.js` (published only when every check passes);
+ *   3. mirror the sources into `src/figma-plugin/` so the root type-check covers the same code;
+ *   4. package the project into `public/downloads/forma-figma-plugin.zip`, images excluded.
+ *
+ * `npm test` then verifies the download still matches the project byte for byte.
  */
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const pluginRoot = path.join(root, 'figma-plugin');
+const mirrorRoot = path.join(root, 'src/figma-plugin');
 const packagePath = path.join(root, 'public/downloads/forma-figma-plugin.zip');
 const expectedPluginId = '1690885096816846170';
+const expectedName = 'Forma Design System · Lulamile Mkhungela';
 
-// The complete package contents: the reference project's text files, without any images.
+// The complete package contents: the plugin project's text files, without any images.
 const packageFiles = [
   '.gitattributes',
   'LICENSE',
@@ -39,27 +45,87 @@ const packageFiles = [
 ];
 
 const imageExtensions = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.bmp', '.svg', '.ico', '.tiff']);
-
-async function listFiles(directory, prefix = '') {
-  const entries = await fs.readdir(path.join(directory, prefix), { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) files.push(...(await listFiles(directory, relative)));
-    else if (entry.isFile()) files.push(relative);
-  }
-  return files;
-}
+// Local installs and build scratch space never ship, so they are not counted as drift.
+const ignoredDirectories = new Set(['node_modules', 'dist', '.cache', '.turbo']);
 
 const manifest = JSON.parse(await fs.readFile(path.join(pluginRoot, 'manifest.json'), 'utf8'));
 if (manifest.main !== 'code.js' || manifest.ui !== 'ui.html' || manifest.id !== expectedPluginId) {
   throw new Error('The Forma Figma manifest must keep the supplied plugin ID and its code.js/ui.html entry points.');
 }
-if (manifest.name !== 'Forma Design System · Lulamile Mkhungela') {
+if (manifest.name !== expectedName) {
   throw new Error('The Forma Figma manifest must keep the credited plugin name.');
 }
 if (manifest.networkAccess?.allowedDomains?.join(',') !== 'none') {
   throw new Error('Forma is offline-first. Keep networkAccess.allowedDomains set to ["none"].');
+}
+await fs.access(path.join(pluginRoot, 'ui.html'));
+
+// 1 — type-check before anything is written.
+execFileSync(
+  process.execPath,
+  [path.join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '-p', path.join(pluginRoot, 'tsconfig.json')],
+  { cwd: root, stdio: 'inherit' }
+);
+
+// 2 — bundle. esbuild normally discards output on failure; publish only successful bytes.
+const outfile = path.join(pluginRoot, 'code.js');
+const result = await build({
+  absWorkingDir: pluginRoot,
+  entryPoints: ['code.ts'],
+  outfile: 'code.js',
+  bundle: true,
+  write: false,
+  format: 'iife',
+  platform: 'browser',
+  target: 'es2019',
+  // Keep credits and board names readable UTF-8 in the bundle instead of \u escapes.
+  charset: 'utf8',
+  legalComments: 'inline'
+});
+if (result.errors.length > 0) throw new Error('The Forma plugin did not compile.');
+const bundled = result.outputFiles?.find((file) => path.resolve(file.path) === outfile);
+if (!bundled) throw new Error('The bundler did not produce code.js.');
+const temporary = `${outfile}.tmp`;
+await fs.writeFile(temporary, bundled.contents);
+await fs.rename(temporary, outfile);
+
+// 3 — mirror the sources so the root type-check and the shipped plugin are the same code.
+await fs.mkdir(mirrorRoot, { recursive: true });
+await fs.copyFile(path.join(pluginRoot, 'code.ts'), path.join(mirrorRoot, 'main.ts'));
+for (const name of ['placement.ts', 'variable-codec.ts']) {
+  await fs.copyFile(path.join(pluginRoot, name), path.join(mirrorRoot, name));
+}
+// The mirror reads the canonical token source at the repository root.
+const tokensSource = await fs.readFile(path.join(pluginRoot, 'tokens.ts'), 'utf8');
+await fs.writeFile(
+  path.join(mirrorRoot, 'tokens.ts'),
+  tokensSource.replace(
+    "import source from './forma.tokens.json'",
+    "import source from '../../tokens/forma.tokens.json'"
+  )
+);
+
+// 3b — publish the panel itself so the guide can embed the real UI instead of a screenshot.
+const previewRoot = path.join(root, 'public/plugin');
+await fs.mkdir(previewRoot, { recursive: true });
+await fs.copyFile(path.join(pluginRoot, 'ui.html'), path.join(previewRoot, 'ui.html'));
+await fs.copyFile(path.join(pluginRoot, 'forma.tokens.json'), path.join(previewRoot, 'forma.tokens.json'));
+
+// 4 — package.
+async function listFiles(directory, prefix = '') {
+  const entries = await fs.readdir(path.join(directory, prefix), { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const relative = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      if (ignoredDirectories.has(entry.name)) continue;
+      files.push(...(await listFiles(directory, relative)));
+    } else if (entry.isFile()) {
+      if (entry.name.endsWith('.tmp')) continue;
+      files.push(relative);
+    }
+  }
+  return files;
 }
 
 const present = await listFiles(pluginRoot);
@@ -71,7 +137,7 @@ if (unexpected.length > 0) {
   throw new Error(
     images.length > 0
       ? `The ZIP ships the plugin without images. Remove: ${unexpected.join(', ')}`
-      : `The plugin package holds files that are not part of the reference project: ${unexpected.join(', ')}`
+      : `The plugin package holds files that are not part of the project: ${unexpected.join(', ')}`
   );
 }
 
@@ -151,5 +217,5 @@ await fs.mkdir(path.dirname(packagePath), { recursive: true });
 await fs.writeFile(packagePath, createZip(entries));
 
 console.log(
-  `Packaged the Forma Figma plugin (${entries.length} files, no images) at public/downloads/forma-figma-plugin.zip.`
+  `Built and packaged the Forma Figma plugin (${entries.length} files, no images) at public/downloads/forma-figma-plugin.zip.`
 );

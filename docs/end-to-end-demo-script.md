@@ -93,23 +93,23 @@ Use a Figma draft or duplicate file for the plugin walkthrough. Keep the reposit
 
 ## 04:20–06:30 — Figma bridge: native variables and component sets
 
-**On screen:** Show the Figma bridge page and reference screenshot, then the local Figma plugin panel.
+**On screen:** Show the Figma bridge page with the plugin panel embedded live in it, then the same panel running inside Figma.
 
 **Say:**
 
 > “There is no attached or published Figma library in this repository, so the handoff is local and explicit. The ready-to-import ZIP means we do not need a build command just to try the plugin. We import its manifest into a file we control and use the bundled DTCG source—or import a local draft. The plugin declares no network access and needs no Figma API token.”
 
-**Action:** Click **Download plugin package** in the Figma bridge, extract it, then in Figma import the extracted `manifest.json`. Open **Forma Design System · Lulamile Mkhungela**, and show the source count, placement choices and optional Storybook URL field. Mention that maintainers can rebuild the package from source when needed.
+**Action:** Click **Download plugin package** in the Figma bridge, extract it, then in Figma import the extracted `manifest.json`. Open **Forma Design System · Lulamile Mkhungela**, and show the panel's short build list — variables, text styles, sixteen sets, four boards — the source count, placement choices and the optional Storybook URL field. Mention that one command, `npm run build:figma`, type-checks, bundles and repackages the plugin.
 
 **Say:**
 
 > “The Storybook URL is a description link only; the plugin does not fetch it. We can let Forma choose a page layout, keep everything on the current page, or require four new pages. That matters because some starter files have page or mode limits.”
 
-**Action:** Click **Build design library**. Let the progress finish. Show the native variables, Light and Dark modes, text styles, foundations board, component board and sample pattern. Select one variant and inspect its name or description. Then use **Export edited Figma variables** and show the downloaded snapshot.
+**Action:** Click **Build design library**. Let the progress finish. Show the three variable collections and the Light / Dark mode picker, the eight text styles with a size variable bound, the foundations board — every token drawn once, including the semantic Light and Dark panels — the component board, and the pattern board in both modes. Select one variant and read its description: React export, Angular path, Storybook story. Then use **Export edited Figma variables** and show the downloaded snapshot.
 
 **Say:**
 
-> “The plugin creates or updates Forma-owned variables and lays out a cover, foundations, component library and pattern board. It creates sixteen variant sets. Existing non-Forma pages are not deleted. The export is a review snapshot: we compare it with the source and intentionally apply approved changes rather than silently replacing the canonical file.”
+> “One press builds the whole library: one hundred and seventy variables across three collections, eight text styles bound to their size tokens, sixteen component sets with real variants, and four boards — cover, foundations, components and patterns. Nothing that was already in the file is deleted, and the summary says exactly where each board landed. The export is a review snapshot: we diff it against the source and apply what we actually want, rather than replacing the canonical file.”
 
 ---
 

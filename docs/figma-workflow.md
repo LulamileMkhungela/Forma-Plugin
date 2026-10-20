@@ -1,66 +1,64 @@
-# Figma handoff: variables → Forma → code
+# Figma handoff: tokens → Forma → code
 
-**Forma Design System · created by Lulamile Mkhungela**
+**Forma Design System · designed and built by Lulamile Mkhungela**
 
-This repository does not contain an attached or published Figma library. The local development plugin gives a team a repeatable way to create Forma variables, typography and component sets inside a Figma file they control.
+There is no attached Figma library in this repository and no cloud sync. The local plugin gives you a repeatable way to build Forma — variables, type styles, component sets and review boards — inside a file you control.
 
-## 1. Edit the canonical source
+## 1. Edit the one source
 
-- Make token changes in [`tokens/forma.tokens.json`](../tokens/forma.tokens.json).
-- Run `npm run tokens` to regenerate CSS, Sass, browser downloads and [`tokens/figma-tokens.json`](../tokens/figma-tokens.json).
-- The Figma JSON has `core`, `light` and `dark` token sets plus `$themes` metadata, so it can be imported into Tokens Studio.
-- The plugin also bundles the DTCG source. You can import another local DTCG JSON draft from its UI (maximum 2 MB).
+- Token changes happen in [`tokens/forma.tokens.json`](../tokens/forma.tokens.json).
+- `npm run tokens` regenerates CSS, Sass, the browser downloads, [`tokens/figma-tokens.json`](../tokens/figma-tokens.json) for Tokens Studio, and the copy the plugin bundles at `figma-plugin/forma.tokens.json`.
+- The plugin can also load another local DTCG JSON from its panel (2 MB max) if you want to try a draft before committing it.
 
-Do not hand-edit generated files. Review the value and alias changes in the source before updating outputs.
+Never hand-edit generated files. Review the diff in the source, then rebuild.
 
-## 2. Download and import the local plugin
+## 2. Import the plugin
 
-The ready-to-import package is [`public/downloads/forma-figma-plugin.zip`](../public/downloads/forma-figma-plugin.zip). Extract it to a stable folder, open the destination Figma file, then choose **Plugins → Development → Import plugin from manifest** and select the extracted `manifest.json`. Run **Forma Design System · Lulamile Mkhungela** from the Development menu.
+Grab [`public/downloads/forma-figma-plugin.zip`](../public/downloads/forma-figma-plugin.zip) — or **Download plugin package** on the guide's Figma bridge page — extract it somewhere stable, then **Plugins → Development → Import plugin from manifest** and select the extracted `manifest.json`. Run **Forma Design System · Lulamile Mkhungela**.
 
-The ZIP is the Forma plugin project exactly as supplied by its author, repackaged without images: `manifest.json`, the compiled `code.js`, `ui.html`, the TypeScript sources, `forma.tokens.json`, `LICENSE` and the local tooling. Everything it needs sits at the package root, so the extracted folder is also the folder you can open in an editor.
-
-No local plugin build is required to try Forma. The supplied project is vendored in [`figma-plugin/`](../figma-plugin/) so the download stays reproducible; maintainers repackage it from the repository root with:
+`code.js` is already compiled, so there is nothing to install just to try it. To rebuild it from the repository root:
 
 ```bash
 npm run build:figma
 ```
 
-That command copies the vendored files into the download ZIP byte for byte — it never regenerates the author's compiled `code.js` — and `npm test` fails if the ZIP and the vendored project differ. The packaging step rejects images, so the download stays text-only. The manifest declares `networkAccess.allowedDomains: ["none"]`; no API key, personal access token or remote sync service is required.
+That one command type-checks the plugin sources, bundles `code.ts` → `code.js`, mirrors them into [`src/figma-plugin/`](../src/figma-plugin/) so the repository type-check covers the same code, and repackages the ZIP without images. `npm test` fails if the ZIP and the project differ, if `code.js` drifts from `code.ts`, or if the mirror is stale. The manifest keeps `networkAccess.allowedDomains: ["none"]` — no API key, no token, no sync service.
 
-Because the packaged plugin is the supplied project itself, the descriptions it writes onto generated component sets name the layout of that project. This repository's own component map and code guide remain the handoff reference for Forma React exports, `forma-*` Angular adapters and Storybook stories; compare the two before copying generated descriptions into documentation.
+## 3. Build the library
 
-## 3. Build the Figma design library
+1. **Use bundled tokens** or **Import token JSON**. The panel counts the typed tokens it found.
+2. Optionally paste a published Storybook base URL. It is only written into component descriptions; no request is made.
+3. Choose where to build:
+   - **Auto** — reserve the four Forma pages, and when the file's page limit refuses, keep the pages that were created and share all four boards across them under headings. Only with no page available does it fall back to the page you had open.
+   - **This page** — stack all four boards on the current page.
+   - **Four new pages only** — refuse and roll back rather than build somewhere else.
+4. Press **Build design library** and watch the status line.
 
-In the plugin UI:
+The source is validated before your file is touched. Then Forma creates or updates:
 
-1. Choose **Use bundled tokens** or **Import token JSON**. The UI reports how many typed tokens it found.
-2. Optionally enter a published Storybook base URL. The value is only written into descriptions on generated component sets—there is no network request.
-3. Choose a placement:
-   - **Auto** — prefer separate Forma pages, but adapt when the file’s page limits require shared pages.
-   - **This page** — place all generated boards in a vertical stack on the current page.
-   - **Four new pages only** — require four generated pages and stop if Figma will not allow them.
-4. Click **Build design library** and follow the progress messages.
+- **170 variables** across *Primitives*, *Components* and *Semantics*, with real Light / Dark modes (separate collections if a plan will not allow a second mode).
+- **8 text styles** taken from the `font.size` and `font.lineHeight` tokens, each size bound to its variable.
+- **16 component sets** with variants, auto layout, bound fills / radii / heights and a `Label` property where it is useful. Descriptions name the React export, the Angular path and the Storybook story id — all real files in this repository.
+- **Four boards**: *00 Start here*, *01 Foundations* (every token drawn once, including the semantic Light and Dark panels), *02 Components*, *03 Patterns* built from real instances in both modes.
 
-The plugin validates the source before changing the file. It creates or updates native Forma variables and Light/Dark semantic modes where supported, applies available text styles and variable bindings, and builds four review boards: cover, foundations, component library and a sample pattern. The component board contains **16 native component sets** with variants and documentation properties.
+Your own pages are never deleted. Plan limits are reported in the completion summary instead of failing quietly.
 
-Existing non-Forma pages are not deleted. Some Figma starter files limit pages or modes; the plugin reports those constraints and uses a supported fallback layout where possible. Review the resulting page placement, variable aliases, typography and variants before sharing or publishing the library.
+## 4. Export, review, return to code
 
-## 4. Export, review and return to code
+**Export edited Figma variables** downloads a DTCG JSON snapshot of the variables as they stand in your file, aliases and units intact. It is a review artifact:
 
-Use **Export edited Figma variables** to download a JSON snapshot of the current Forma variables. The export is a review artifact, not a replacement for the source of truth:
+1. Diff it against `tokens/forma.tokens.json`.
+2. Apply only what you actually want to the source.
+3. `npm run tokens` to rebuild CSS, Sass and the Tokens Studio export.
+4. `npm test`, then check the guide, Storybook and — if shared styles or component APIs moved — the Angular example.
+5. Commit source and generated output together.
 
-1. Compare the export with `tokens/forma.tokens.json`.
-2. Intentionally apply approved changes to the DTCG source.
-3. Run `npm run tokens` to rebuild CSS, Sass and the Tokens Studio export.
-4. Run `npm test`, review the React app and Storybook, and check the Angular example if shared styles or component APIs changed.
-5. Commit reviewed source and generated outputs together.
+## Tokens in Figma, in practice
 
-## Token types and naming
+- Primitive paths map to grouped collections and readable variable names.
+- `theme.light` and `theme.dark` stay as modes wherever the file allows them.
+- Figma numbers are unitless; the token path and generated code keep the units for dimensions and durations.
+- Colour aliases resolve to native variable values while their names stay recognisable in the collection.
+- Font families and weights are applied when a local font supports them, and the summary names the fallback if it did not.
 
-- Primitive token paths map to grouped Figma collections and variable names.
-- Semantic paths preserve `theme.light` and `theme.dark` modes where the Figma file permits them.
-- Figma numeric values are unitless; the token path and generated code retain units for dimensions and durations.
-- Color aliases are resolved for native variable values while their names remain recognizable in the collection.
-- Font families and weights are applied to text styles when an available local font supports them; the plugin reports a fallback if the preferred font is unavailable.
-
-The browser’s **Figma bridge** page offers the ready-to-import plugin ZIP and downloadable DTCG, Tokens Studio, CSS and Sass outputs. The source-build command is tucked under maintainer details. The page also includes the supplied reference screenshot for the integration flow.
+The guide's **Figma bridge** page carries the plugin ZIP plus the DTCG, Tokens Studio, CSS and Sass downloads.

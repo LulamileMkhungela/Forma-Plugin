@@ -8,6 +8,7 @@ import {
   Progress, RadioGroup, SelectField, Switch, Table, Tabs, TextField, Tooltip,
   type ButtonVariant, type ControlSize
 } from '../system';
+import { PluginPreview } from './PluginPreview';
 import { componentHandoff } from '../data/component-handoff';
 import { allTokens, cssValue, tokenReference } from '../data/tokens';
 import { copyText } from '../data/clipboard';
@@ -225,14 +226,14 @@ export function ExplorerPage({ onToast, onNavigate }: ExplorerPageProps) {
                         <button onClick={() => pick(entry.id)}>{entry.figmaSet}</button><small>Component set</small>
                       </li>
                     ))}
-                    <li><b>✳ Sample library</b><small>Starter page</small></li>
+                    <li><b>00 · Start here</b><small>Board</small></li>
+                    <li><b>01 · Foundations</b><small>Board · every token</small></li>
+                    <li><b>02 · Components</b><small>Board · 16 sets</small></li>
+                    <li><b>03 · Patterns</b><small>Board · Light + Dark</small></li>
                   </ul>
                 </CardContent></Card>
               </div>
-              <figure className="explorer-figure">
-                <img src="/images/forma/plugin-cover.png" alt="Forma Figma plugin cover showing the forest and lime component system" />
-                <figcaption>Preview of what the offline plugin generates — install is optional, everything on this page is visible now.</figcaption>
-              </figure>
+              <PluginPreview caption="The panel, live — install is optional, everything on this page is visible now." />
               <details className="explorer-install">
                 <summary>Optional · install the plugin in Figma</summary>
                 <ol>

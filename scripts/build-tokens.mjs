@@ -144,6 +144,8 @@ const figmaExportPath = path.join(root, 'tokens/figma-tokens.json');
 await fs.writeFile(figmaExportPath, `${JSON.stringify(tokensStudioExport(), null, 2)}\n`);
 await fs.mkdir(path.join(root, 'public/tokens'), { recursive: true });
 await fs.copyFile(sourcePath, path.join(root, 'public/tokens/forma.tokens.json'));
+// The offline Figma plugin bundles the same canonical source, so it can never drift.
+await fs.copyFile(sourcePath, path.join(root, 'figma-plugin/forma.tokens.json'));
 await fs.copyFile(figmaExportPath, path.join(root, 'public/tokens/figma-tokens.json'));
 await fs.copyFile(path.join(root, 'src/generated/tokens.css'), path.join(root, 'public/tokens/forma.tokens.css'));
 await fs.copyFile(path.join(root, 'dist/tokens/scss/_forma-tokens.scss'), path.join(root, 'public/tokens/forma.tokens.scss'));

@@ -3,230 +3,387 @@
   <head>
     <meta charset="utf-8" />
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 24px;
-        font:
-          12px/1.7 Inter,
-          system-ui,
-          sans-serif;
+        padding: 20px 20px 16px;
+        font: 11px/1.55 Inter, system-ui, sans-serif;
         color: #1d261a;
         background: #fafbf9;
+        -webkit-font-smoothing: antialiased;
       }
+      a { color: inherit; }
       header {
         display: flex;
-        gap: 10px;
         align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #d7ded2;
+        gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #dfe6dc;
       }
       .mark {
         background: #27563d;
         color: #e1f39f;
         display: grid;
         place-items: center;
-        width: 35px;
-        height: 35px;
-        border-radius: 8px;
-        font-size: 28px;
-        font-weight: 700;
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        flex: 0 0 auto;
       }
-      h1 {
-        font-size: 24px;
-        font-weight: 650;
-        letter-spacing: -1px;
+      .brand { line-height: 1.1; }
+      .brand h1 {
+        font-size: 21px;
+        font-weight: 750;
+        letter-spacing: -0.8px;
         margin: 0;
-        line-height: 1.2;
+        line-height: 1;
       }
-      header small {
-        font-size: 9px;
+      .brand small {
+        font-size: 7.5px;
+        letter-spacing: 0.13em;
+        font-weight: 700;
         color: #5c6856;
+        text-transform: uppercase;
+      }
+      .byline {
+        margin-left: auto;
+        font-size: 8.5px;
+        font-weight: 600;
+        color: #27563d;
+        background: #eef5ee;
+        border: 1px solid #d6e6d6;
+        padding: 5px 8px;
+        border-radius: 999px;
+        white-space: nowrap;
       }
       h2 {
-        font-size: 19px;
-        line-height: 1.35;
-        font-weight: 550;
+        font-size: 18px;
+        line-height: 1.25;
+        font-weight: 650;
         letter-spacing: -0.5px;
-        margin: 23px 0 9px;
+        margin: 16px 0 8px;
       }
-      p {
+      .intro p {
+        margin: 0 0 10px;
         font-size: 11px;
-        color: #5c6856;
-        margin: 0 0 17px;
+        line-height: 1.6;
+        color: #4a5546;
       }
+      .intro p strong { color: #1d261a; font-weight: 600; }
+      .me {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        background: #fff;
+        border: 1px solid #e2e7df;
+        border-left: 3px solid #27563d;
+        border-radius: 8px;
+        padding: 10px 11px;
+        margin: 10px 0 14px;
+      }
+      .me .avatar {
+        width: 26px; height: 26px;
+        border-radius: 999px;
+        background: #27563d;
+        color: #e1f39f;
+        display: grid; place-items: center;
+        font-size: 10px; font-weight: 700;
+        flex: 0 0 auto;
+      }
+      .me p {
+        margin: 0;
+        font-size: 10px;
+        line-height: 1.5;
+        color: #2e392b;
+      }
+      .me small { color: #5c6856; }
+      .token-count {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        font-weight: 600;
+        color: #244a33;
+        background: #eef5ee;
+        border: 1px solid #d5e6d5;
+        border-radius: 8px;
+        padding: 9px 11px;
+      }
+      .token-count i {
+        width: 6px; height: 6px;
+        background: #2b8a5e;
+        border-radius: 50%;
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+      .section-label {
+        display: block;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #3a4636;
+        margin: 16px 0 7px;
+      }
+      .row { display: flex; gap: 8px; }
+      .row > button { width: 50%; }
       button {
         border: 1px solid #d7ded2;
-        border-radius: 7px;
-        background: #fafbf9;
+        border-radius: 8px;
+        background: #fff;
         color: #1d261a;
-        padding: 10px 14px;
-        font:
-          500 11px/1.5 Inter,
-          system-ui,
-          sans-serif;
+        padding: 9px 12px;
+        font: 500 11px/1.4 Inter, system-ui, sans-serif;
         cursor: pointer;
-        min-height: 37px;
+        min-height: 36px;
         width: 100%;
+        transition: background 0.12s, border-color 0.12s, transform 0.08s;
       }
-      button:hover {
-        background: #f3f5f1;
-      }
-      button:focus-visible,
-      input:focus-visible,
-      textarea:focus-visible {
-        outline: 3px solid #2260d1;
+      button:hover { background: #f3f5f1; border-color: #c9d5c5; }
+      button:active { transform: translateY(0.5px); }
+      button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+        outline: 2.5px solid #2260d1;
         outline-offset: 2px;
       }
       button.primary {
         background: #27563d;
         border-color: #27563d;
-        color: #fafbf9;
-        margin-top: 15px;
+        color: #fefef9;
+        font-weight: 650;
+        font-size: 12px;
+        min-height: 42px;
+        margin-top: 14px;
+        box-shadow: 0 2px 8px rgba(39,86,61,0.18);
       }
-      button.primary:hover {
-        background: #224633;
+      button.primary:hover { background: #1f4a33; }
+      button.secondary {
+        background: #fff;
+        margin-top: 8px;
+        color: #2e392b;
       }
-      button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      .row {
-        display: flex;
-        gap: 8px;
-      }
-      .row > button {
-        width: 50%;
-      }
-      .token-count {
-        font-size: 10px;
-        color: #27563d;
-        background: #f0f7f3;
-        border: 1px solid #dcece1;
-        border-radius: 6px;
-        padding: 9px 12px;
-        margin: 17px 0;
-      }
+      button:disabled { opacity: 0.45; cursor: not-allowed; }
+      .file { display: none; }
+      #download { display: none; }
       label {
         display: block;
         font-size: 10px;
-        color: #414d3d;
-        font-weight: 500;
-        margin: 17px 0 6px;
+        font-weight: 600;
+        color: #2e392b;
+        margin: 0 0 6px;
       }
-      input[type='url'],
-      select {
+      label span {
+        font-weight: 450;
+        color: #6b7766;
+        font-size: 9.5px;
+      }
+      input[type='url'], select {
         border: 1px solid #d7ded2;
-        border-radius: 6px;
+        border-radius: 7px;
         width: 100%;
         padding: 9px 11px;
-        font:
-          11px Inter,
-          system-ui;
-        background: #f3f5f1;
+        font: 11px Inter, system-ui;
+        background: #fff;
         color: #1d261a;
       }
+      input[type='url']::placeholder { color: #9aa69a; }
       .hint {
         font-size: 9px;
-        line-height: 1.7;
-        color: #5c6856;
-        margin: 7px 0 0;
+        line-height: 1.5;
+        color: #6b7766;
+        margin: 6px 0 0;
       }
-      #status {
-        border-top: 1px solid #d7ded2;
-        margin-top: 20px;
-        padding-top: 14px;
-        font-size: 10px;
-        color: #5c6856;
-        white-space: pre-wrap;
-        min-height: 58px;
+      .field { margin-top: 14px; }
+      /* what builds */
+      .builds {
+        margin-top: 12px;
+        background: #fff;
+        border: 1px solid #e1e7de;
+        border-radius: 10px;
+        padding: 11px 11px 10px;
       }
-      footer {
+      .builds-title {
         font-size: 9px;
-        color: #5c6856;
-        border-top: 1px solid #d7ded2;
-        margin-top: 15px;
-        padding-top: 14px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: #3a4636;
+        margin: 0 0 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
-      footer strong {
-        font-weight: 500;
+      .builds-title i {
+        width: 14px; height: 14px;
+        display: grid; place-items: center;
+        background: #eef5ee;
+        border-radius: 4px;
+        font-size: 8px;
+        color: #27563d;
+        font-style: normal;
+        font-weight: 800;
+      }
+      .build-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .build-item {
+        background: #fafbf9;
+        border: 1px solid #e8ece6;
+        border-radius: 7px;
+        padding: 7px 8px;
+        display: flex;
+        gap: 7px;
+        align-items: flex-start;
+      }
+      .build-item b {
+        display: block;
+        font-size: 9.5px;
+        font-weight: 650;
+        line-height: 1.2;
         color: #1d261a;
       }
-      .file {
-        display: none;
+      .build-item small {
+        display: block;
+        font-size: 8.5px;
+        line-height: 1.4;
+        color: #5c6856;
+        margin-top: 1px;
       }
-      .success {
-        color: #27563d !important;
+      .build-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: #2b8a5e;
+        margin-top: 4px;
+        flex: 0 0 auto;
       }
-      .error {
-        color: #b42318 !important;
-      }
-      #download {
-        display: none;
-      }
+      .build-item:nth-child(2) .build-dot { background: #8fbf3d; }
+      .build-item:nth-child(3) .build-dot { background: #c49a2b; }
+      .build-item:nth-child(4) .build-dot { background: #5c6bff; }
       .notice {
         font-size: 9px;
-        padding: 10px 12px;
-        border: 1px solid #fedf89;
-        background: #fffaeb;
-        border-radius: 6px;
-        color: #93370d;
-        margin-top: 15px;
+        line-height: 1.5;
+        padding: 9px 11px;
+        border: 1px solid #e6e0c8;
+        background: #fffdf0;
+        border-radius: 7px;
+        color: #6b5d2a;
+        margin-top: 12px;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .notice i { font-style: normal; margin-top: 0; }
+      #status {
+        border-top: 1px solid #e6e9e4;
+        margin-top: 14px;
+        padding-top: 11px;
+        font-size: 10px;
+        line-height: 1.5;
+        color: #4a5546;
+        white-space: pre-wrap;
+        min-height: 40px;
+      }
+      .success { color: #1a6b3c !important; }
+      .error { color: #b42318 !important; }
+      footer {
+        font-size: 9px;
+        line-height: 1.6;
+        color: #6b7766;
+        border-top: 1px solid #e6e9e4;
+        margin-top: 12px;
+        padding-top: 11px;
+      }
+      footer strong { font-weight: 700; color: #1d261a; }
+      footer .foot-line {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 4px;
+        color: #8a9a86;
+        font-size: 8.5px;
+      }
+      footer .foot-line i {
+        width: 12px; height: 1px;
+        background: #dfe6dc;
+        display: inline-block;
       }
     </style>
   </head>
   <body>
     <header>
       <span class="mark">f</span>
-      <div>
+      <div class="brand">
         <h1>forma.</h1>
         <small>A LIVING DESIGN SYSTEM</small>
       </div>
+      <span class="byline">by Lulamile Mkhungela</span>
     </header>
-    <h2>One source.<br />A shared language.</h2>
-    <p>
-      Build native variables, text styles, and component sets from the same tokens used by React and
-      Angular.
-    </p>
-    <div id="count" class="token-count">Loading the bundled source…</div>
-    <div class="row">
-      <button id="import">Import token JSON</button><button id="bundled">Use bundled tokens</button>
+
+    <div class="intro">
+      <h2>One source.<br />A shared language.</h2>
+      <p>Build native Figma variables, text styles and <strong>16 component sets</strong> from the tokens your React & Angular code uses. <strong>No cloud. No sync.</strong></p>
+      <div class="me">
+        <span class="avatar">LM</span>
+        <p><strong>Hi, I'm Lulamile.</strong> <small>— designer & maker of Forma. I built this for teams who want one real source, not scattered files. Every token here is hand-named and tested in code.</small></p>
+      </div>
     </div>
-    <input class="file" type="file" id="file" accept=".json,application/json" /><label
-      for="storybook"
-      >Storybook base URL (optional)</label
-    ><input id="storybook" type="url" placeholder="Your published React Storybook URL" />
-    <p class="hint">
-      Adds documentation links to component descriptions. No network request or account connection
-      is made.
-    </p>
-    <label for="placement">Where to build</label
-    ><select id="placement">
-      <option value="auto">Auto — four pages, or share the pages this file allows</option>
-      <option value="single">This page — every board in one stack</option>
-      <option value="pages">Four new pages only — refuse if unavailable</option>
-    </select>
-    <p class="hint">
-      Starter files hold three pages. Auto keeps the Forma pages Figma allows (for example 00 and
-      01) and places all four boards on them, so every component stays visible. Nothing is deleted.
-    </p>
-    <button class="primary" id="build">Build design library →</button
-    ><button id="export" style="margin-top: 9px">Export edited Figma variables ↓</button
-    ><a id="download"></a>
-    <div class="notice">
-      Re-runs update Forma variables and create new generated pages. Existing design pages are never
-      deleted. If your plan limits modes, separate Light and Dark collections are used. If it limits
-      pages, all four boards are shared across the Forma pages available, under headings.
+
+    <div id="count" class="token-count"><i></i> Loading the bundled source…</div>
+
+    <div class="field">
+      <span class="section-label" style="margin-top:14px;">Token source</span>
+      <div class="row">
+        <button id="import">Import JSON</button>
+        <button id="bundled">Use bundled</button>
+      </div>
+      <input class="file" type="file" id="file" accept=".json,application/json" />
+      <p class="hint">Bundled = canonical 170 tokens. Import a local DTCG JSON to try changes.</p>
     </div>
-    <div id="status" role="status">
-      Your design file stays local. Nothing is sent to an external service.
+
+    <div class="builds">
+      <p class="builds-title"><i>✓</i> What this builds — the whole library</p>
+      <div class="build-grid">
+        <div class="build-item"><span class="build-dot"></span><span><b>170 variables</b><small>Light & Dark modes, bound to every fill</small></span></div>
+        <div class="build-item"><span class="build-dot"></span><span><b>8 text styles</b><small>Sizes bound to font tokens</small></span></div>
+        <div class="build-item"><span class="build-dot"></span><span><b>16 component sets</b><small>Button → Table, all variants</small></span></div>
+        <div class="build-item"><span class="build-dot"></span><span><b>4 boards</b><small>Start · Foundations · Components · Patterns</small></span></div>
+      </div>
     </div>
+
+    <div class="field">
+      <label for="storybook">Storybook link <span>— optional</span></label>
+      <input id="storybook" type="url" placeholder="https://your-storybook… (adds doc links)" />
+      <p class="hint">Only adds links to descriptions. No network request is made.</p>
+    </div>
+
+    <div class="field">
+      <label for="placement">Where to build</label>
+      <select id="placement">
+        <option value="auto">Auto — uses every page your plan allows (recommended)</option>
+        <option value="single">This page — all boards stacked here</option>
+        <option value="pages">Four new pages — fail if not possible</option>
+      </select>
+      <p class="hint">Starter files get 3 pages max. Auto shares the 4 boards cleanly — nothing deleted.</p>
+    </div>
+
+    <button class="primary" id="build">Build design library →</button>
+    <button class="secondary" id="export">Export edited variables ↓</button>
+    <a id="download"></a>
+
+    <div class="notice"><i>↻</i><span>Re-running updates variables & adds fresh boards. Your pages stay untouched. Limited modes → separate collections.</span></div>
+
+    <div id="status" role="status">Your file stays local. Nothing leaves your machine.</div>
+
     <footer>
-      Designed & created by <strong>Lulamile Mkhungela</strong><br />Figma → Tokens → React /
-      Angular → Storybook
+      <strong>Hand-made by Lulamile Mkhungela</strong> — not generated, not outsourced.<br />
+      Figma → Tokens → React / Angular → Storybook <span style="color:#9aa69a;">· MIT</span>
+      <div class="foot-line"><i></i> offline · no tracking · your file, your tokens <i></i></div>
     </footer>
+
     <script>
       let tokens = null,
         bundled = null,
@@ -236,9 +393,37 @@
         byId('status').textContent = text;
         byId('status').className = tone;
       }
+      // Figma blocks every network request for this plugin, so a successful fetch proves the
+      // panel is running outside it — embedded in the guide as a live preview, or opened
+      // directly. In that case it loads the token copy beside it and answers presses honestly
+      // instead of waiting for a sandbox that will never reply.
+      let preview = false;
+      function previewReply(message) {
+        if (message.type === 'build')
+          return 'Live preview. In Figma, this builds the whole library in your open file.';
+        if (message.type === 'export')
+          return 'Live preview. In Figma, this downloads your edited variables as DTCG JSON.';
+        return '';
+      }
       function send(message) {
+        if (preview) {
+          if (message.type === 'build' || message.type === 'export') setBusy(false);
+          const reply = previewReply(message);
+          if (reply) status(reply);
+          return;
+        }
         parent.postMessage({ pluginMessage: message }, '*');
       }
+      fetch('forma.tokens.json')
+        .then((response) => (response.ok ? response.json() : null))
+        .then((value) => {
+          if (!value) return;
+          preview = true;
+          bundled = value;
+          setTokens(value);
+          status('Live preview of the plugin panel. Import the plugin in Figma to build.');
+        })
+        .catch(() => {});
       function setBusy(value) {
         busy = value;
         for (const id of ['build', 'export', 'import', 'bundled']) byId(id).disabled = value;
@@ -252,19 +437,19 @@
       }
       function setTokens(value) {
         tokens = value;
-        byId('count').textContent = count(value) + ' typed tokens · shared with React and Angular';
+        byId('count').innerHTML = '<i></i> ' + count(value) + ' typed tokens · shared with React and Angular';
       }
       byId('import').onclick = () => byId('file').click();
       byId('file').onchange = async (event) => {
         try {
           const file = event.target.files[0];
           if (!file) return;
-          if (file.size > 2097152) throw new Error('Choose a document smaller than 2 MB.');
+          if (file.size > 2097152) throw new Error('Choose a file smaller than 2 MB.');
           const value = JSON.parse(await file.text());
           if (!value || typeof value !== 'object' || !count(value))
             throw new Error('No typed tokens found.');
           setTokens(value);
-          status('Imported draft. It will be fully validated before building.');
+          status('Got it — imported. Will validate when you build.');
         } catch (e) {
           status(e.message, 'error');
         } finally {
@@ -274,24 +459,24 @@
       byId('bundled').onclick = () => {
         if (bundled) {
           setTokens(bundled);
-          status('Using the bundled canonical source.');
+          status('Back to the bundled source — 170 tokens, ready to build.');
         }
       };
       byId('build').onclick = () => {
         if (busy || !tokens) return;
         const url = byId('storybook').value.trim();
         if (url && !/^https?:\/\//.test(url)) {
-          status('Use a complete HTTP or HTTPS Storybook URL.', 'error');
+          status('Use a full https:// Storybook URL, or leave it empty.', 'error');
           return;
         }
         setBusy(true);
-        status('Validating tokens and loading available fonts…');
+        status('Checking tokens & loading fonts…');
         send({ type: 'build', tokens, storybookBase: url, placement: byId('placement').value });
       };
       byId('export').onclick = () => {
         if (busy) return;
         setBusy(true);
-        status('Reading the current Forma variables…');
+        status('Reading your Forma variables…');
         send({ type: 'export' });
       };
       window.onmessage = (event) => {
@@ -322,7 +507,7 @@
           a.click();
           setTimeout(() => URL.revokeObjectURL(url), 1500);
           status(
-            'Variables exported. Review the JSON in Git, build the tokens, and verify both Storybooks.',
+            'Exported. Review the JSON diff, rebuild tokens, and check Storybook.',
             'success',
           );
         }

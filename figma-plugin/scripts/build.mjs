@@ -44,6 +44,8 @@ const options = {
   format: 'iife',
   platform: 'browser',
   target: 'es2019',
+  // Keep credits and board names readable UTF-8 in the bundle instead of \u escapes.
+  charset: 'utf8',
   legalComments: 'inline',
   plugins: [
     {

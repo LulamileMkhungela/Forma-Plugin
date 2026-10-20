@@ -47,7 +47,7 @@
   inline-size: 18px;
   block-size: 18px;
   margin-top: 1px;
-  border: 1px solid var(--line-strong);
+  border: var(--border-width-default) solid var(--line-strong);
   border-radius: var(--radius-full);
   background: var(--surface);
   transition: border-color var(--motion-duration-fast) var(--motion-ease-standard), box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
@@ -68,7 +68,7 @@
   transform: scale(1);
 }
 .forma-radio__input:focus-visible + .forma-radio__indicator {
-  outline: 3px solid var(--focus-ring);
+  outline: var(--border-width-focus) solid var(--focus-ring);
   outline-offset: 2px;
 }
 .forma-radio.is-disabled {
@@ -122,7 +122,7 @@
 }
 .forma-tabs__tab:focus-visible,
 .forma-tabs__panel:focus-visible {
-  outline: 3px solid var(--focus-ring);
+  outline: var(--border-width-focus) solid var(--focus-ring);
   outline-offset: 2px;
 }
 .forma-tabs__tab:disabled {
@@ -136,7 +136,7 @@
 
 .forma-accordion {
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: var(--border-width-default) solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
 }
@@ -177,7 +177,7 @@
 .forma-accordion__trigger:focus-visible {
   position: relative;
   z-index: 1;
-  outline: 3px solid var(--focus-ring);
+  outline: var(--border-width-focus) solid var(--focus-ring);
   outline-offset: -3px;
 }
 .forma-accordion__trigger:disabled {
@@ -204,7 +204,7 @@
   max-block-size: min(86vh, 48rem);
   padding: 0;
   overflow: auto;
-  border: 1px solid var(--line);
+  border: var(--border-width-default) solid var(--line);
   border-radius: var(--component-card-radius);
   background: var(--surface);
   color: var(--text-main);
@@ -340,14 +340,14 @@
 }
 .forma-tooltip__trigger:focus-visible {
   border-radius: var(--radius-sm);
-  outline: 3px solid var(--focus-ring);
+  outline: var(--border-width-focus) solid var(--focus-ring);
   outline-offset: 3px;
 }
 
 .forma-table-wrap {
   max-inline-size: 100%;
   overflow-x: auto;
-  border: 1px solid var(--line);
+  border: var(--border-width-default) solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
 }
